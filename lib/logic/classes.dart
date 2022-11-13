@@ -99,26 +99,26 @@ class Product {
       required this.ownerId});
 
   Product.fromJson(Map<String, dynamic> json) {
-    productId = json['product_id'];
+    productId = int.parse(json['product_id']);
     name = json['name'];
     dateOfReceipt = json['date_of_receipt'];
     expirationDate = json['expiration_date'];
-    amount = json['amount'];
-    price = json['price'];
-    madeOf = json['made_of'];
-    ownerId = json['owner_id'];
+    amount = int.parse(json['amount']);
+    price = double.parse(json['price']);
+    madeOf = int.parse(json['made_of']);
+    ownerId = int.parse(json['owner_id']);
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['product_id'] = productId;
+    data['product_id'] = productId.toString();
     data['name'] = name;
     data['date_of_receipt'] = dateOfReceipt;
     data['expiration_date'] = expirationDate;
-    data['amount'] = amount;
-    data['price'] = price;
-    data['made_of'] = madeOf;
-    data['owner_id'] = ownerId;
+    data['amount'] = amount.toString();
+    data['price'] = price.toString();
+    data['made_of'] = madeOf.toString();
+    data['owner_id'] = ownerId.toString();
     return data;
   }
 }
