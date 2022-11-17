@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kursova_bd/authentication/login-page.dart';
 import 'package:kursova_bd/mainui/navigation.dart';
-import 'authentication/loginpage.dart';
+import 'authentication/registration-page.dart';
 
 
 void main() {

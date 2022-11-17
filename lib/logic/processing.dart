@@ -10,7 +10,7 @@ class Processing {
       map['action'] = 'GET_ITEMS';
       map['userid'] = userid.toString();
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/itemactions.php'),
+          Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         List<Product> list = parseResponse(response.body);
@@ -33,7 +33,7 @@ class Processing {
       var map = product.toJson();
       map['action'] = 'ADD_ITEM';
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/itemactions.php'),
+          Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -53,7 +53,7 @@ class Processing {
       map['userid'] = userid.toString();
       map['date'] = date;
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/itemactions.php'),
+          Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         List<Product> list = parseResponse(response.body);
@@ -71,7 +71,7 @@ class Processing {
       var map = product.toJson();
       map['action'] = 'UPDATE_ITM';
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/itemactions.php'),
+          Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -89,7 +89,7 @@ class Processing {
       map['action'] = 'DELETE_ITM';
       map['product_id'] = product_id.toString();
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/itemactions.php'),
+          Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
