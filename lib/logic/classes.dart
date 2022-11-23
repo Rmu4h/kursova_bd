@@ -1,8 +1,8 @@
 class User {
   late int userId;
   late String name;
-  late String surmane;
-  late String patronimyc;
+  late String surname;
+  late String patronymic;
   late String passportId;
   late String phone;
   late String email;
@@ -11,18 +11,18 @@ class User {
   User(
       {required this.userId,
       required this.name,
-      required this.surmane,
-      required this.patronimyc,
+      required this.surname,
+      required this.patronymic,
       required this.passportId,
       required this.phone,
       required this.email,
       required this.password});
 
   User.fromJson(Map<String, dynamic> json) {
-    userId = json['user_id'];
+    userId = int.parse(json['user_id']);
     name = json['name'];
-    surmane = json['surmane'];
-    patronimyc = json['patronimyc'];
+    surname = json['surname'];
+    patronymic = json['patronymic'];
     passportId = json['passport_id'];
     phone = json['phone'];
     email = json['email'];
@@ -30,11 +30,11 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['user_id'] = userId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['user_id'] = userId.toString();
     data['name'] = name;
-    data['surmane'] = surmane;
-    data['patronimyc'] = patronimyc;
+    data['surname'] = surname;
+    data['patronymic'] = patronymic;
     data['passport_id'] = passportId;
     data['phone'] = phone;
     data['email'] = email;

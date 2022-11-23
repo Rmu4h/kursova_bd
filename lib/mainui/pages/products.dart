@@ -13,9 +13,13 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-          child: Text('Products')),
+    return Scaffold(
+      body: Center(child: FloatingActionButton(onPressed: () {
+        Processing.userLogin(
+          "blah@gmail.com",
+          'qwerty',
+        );
+      })),
     );
   }
 }
