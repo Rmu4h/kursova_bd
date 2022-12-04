@@ -12,22 +12,28 @@ class LoginPage extends StatefulWidget {
 }
 
 class CustomFormField extends StatelessWidget {
-  const CustomFormField({
+  CustomFormField({
     Key? key,
-    required this.hintText,
+
+    this.hintText = '',
     this.inputFormatters,
     this.validator,
+    this.controller,
   }) : super(key: key);
 
   final String hintText;
+
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
+  var controller;
+
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       inputFormatters: inputFormatters,
       validator: validator,
+      controller: controller,
       decoration: InputDecoration(
         hintText: hintText,
         filled: true,
@@ -48,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF273746),
+      backgroundColor: const Color(0xFF613CEA),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -98,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: MaterialStateProperty.all(const EdgeInsets.only(
                           top: 20, bottom: 20, left: 90, right: 90)),
                       backgroundColor:
-                          MaterialStateProperty.all(const Color(0xFF3498DB)),
+                          MaterialStateProperty.all( Colors.white),
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
@@ -108,8 +114,8 @@ class _LoginPageState extends State<LoginPage> {
                       }
                     },
                     child: const Text(
-                      "Log in",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      "LOG IN",
+                      style: TextStyle(fontSize: 20, color: Color(0xFF6040E5)),
                     ),
                   ),
                 ],
@@ -129,10 +135,13 @@ class _LoginPageState extends State<LoginPage> {
                       MaterialPageRoute(
                           builder: (context) => const RegistrationPage()));
                 },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(const Color(0xFFEBE7FF).withOpacity(0.1)
+                )),
                 child: const Text('Register',
                     style: TextStyle(
                         fontSize: 20,
-                        color: Color(0xFF3498DB),
+                        color: Colors.white,
                         fontWeight: FontWeight.w700)),
               )
             ],

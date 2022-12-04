@@ -67,7 +67,7 @@ class Producer {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['producer_id'] = producerId;
     data['name'] = name;
     data['description'] = description;
@@ -110,7 +110,7 @@ class Product {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['product_id'] = productId.toString();
     data['name'] = name;
     data['date_of_receipt'] = dateOfReceipt;

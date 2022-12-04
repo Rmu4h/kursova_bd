@@ -12,7 +12,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int curpage = 0;
+  int currentPage = 0;
   List pages = const [
     ProductPage(),
     ProducerPage(),
@@ -23,16 +23,17 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[curpage],
+      body: pages[currentPage],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         elevation: 0,
-        selectedItemColor: const Color(0xFF2874A6),
-        unselectedItemColor: const Color(0xFF3498DB),
-        currentIndex: curpage,
+        selectedItemColor: const Color(0xFF613CEA),
+
+        // selectedFontSize: 24.0,
+        currentIndex: currentPage,
         onTap: (index) {
           setState(() {
-            curpage = index;
+            currentPage = index;
           });
         },
         items: const [

@@ -5,25 +5,55 @@ import 'classes.dart';
 
 class Processing {
 
-  Future<List<Product>> getAllProducts(int userid) async {
-    var map = <String, dynamic>{};
-    map['action'] = 'GET_ITEMS';
-    map['userid'] = userid.toString();
-    final response = await http.post(
-        Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
-        body: map); //instead of "localhost" input ur local IPv4
-    if (200 == response.statusCode) {
-      List<Product> list = parseResponse(response.body);
-      return list;
-    } else {
-      return <Product>[];
-    }
-  }
+  // static Future<List<Product>> getAllProducts(int ownerId) async {
+  //   //var map = <String, dynamic>{};
+  //   var map = Map<String, dynamic>();
+  //   map['action'] = 'GET_ITEMS';
+  //   map['userid'] = ownerId.toString();
+  //
+  //   final response = await http.post(
+  //       Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
+  //       body: map); //instead of "localhost" input ur local IPv4
+  //
+  //   if (200 == response.statusCode) {
+  //     print('before list');
+  //     List<Product> list = parseResponse(response.body);
+  //     print('after list');
+  //     return list;
+  //   } else {
+  //     print('fafafafaf2');
+  //
+  //     return <Product>[];
+  //   }
+  // }
+  //
+  // static Future getProducts(int ownerId) async {
+  //   try {
+  //     getAllProducts(ownerId);
+  //   } catch (e) {
+  //     print('eeeerooooree - ${e}');
+  //     return <Product>[];
+  //   }
+  // }
 
-  Future getProducts(int userid) async {
+  static Future<List<Product>> getProducts(int userid) async {
     try {
-      getAllProducts(userid);
+      var map = Map<String, dynamic>();
+      map['action'] = 'GET_ITEMS';
+      map['userid'] = userid.toString();
+      final response = await http.post(
+          Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
+          body: map); //instead of "localhost" input ur local IPv4
+      if (200 == response.statusCode) {
+        List<Product> list = parseResponse(response.body);
+        return list;
+      } else {
+        print('adadsa');
+        return <Product>[];
+      }
     } catch (e) {
+      print('Помилка бля - ${e}');
+
       return <Product>[];
     }
   }
@@ -88,11 +118,11 @@ class Processing {
     }
   }
 
-  static Future<String> deleteProduct(int product_id) async {
+  static Future<String> deleteProduct(int productId) async {
     try {
       var map = <String, dynamic>{};
       map['action'] = 'DELETE_ITM';
-      map['product_id'] = product_id.toString();
+      map['product_id'] = productId.toString();
       final response = await http.post(
           Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
@@ -105,6 +135,26 @@ class Processing {
       return 'error';
     }
   }
+
+  //my function
+  static Future<String> incrementItem(int productId) async {
+    try {
+      var map = <String, dynamic>{};
+      map['action'] = 'DELETE_ITM';
+      map['product_id'] = productId.toString();
+      final response = await http.post(
+          Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
+          body: map); //instead of "localhost" input ur local IPv4
+      if (200 == response.statusCode) {
+        return response.body;
+      } else {
+        return 'error';
+      }
+    } catch (e) {
+      return 'error';
+    }
+  }
+
 
   static Future<User> userLogin(String email, String password) async {
     try {

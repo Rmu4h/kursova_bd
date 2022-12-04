@@ -6,9 +6,32 @@ class ReportPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('ReportPage'),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.logout,
+                    color: Color(0xFFA2A6B1),
+                  ),
+                  onPressed: () {
+                    print('sent');
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => const LoginPage()));
+                    Navigator.pushNamedAndRemoveUntil(context, "/login", (r) => false);
+                  },
+                ),
+              ],
+            ),
+            const Text('ReportPage'),
+          ],
+        )
       ),
     );
   }

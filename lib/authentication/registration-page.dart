@@ -10,21 +10,32 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
+
+  // final TextEditingController _name = TextEditingController(text: "Old Name");
+  // final TextEditingController _surname = TextEditingController(text: "Old Surname");
+  // final TextEditingController _patronymic = TextEditingController(text: "Old Patronymic");
+  // final TextEditingController _docNo = TextEditingController(text: "Old Name");
+  // final TextEditingController _email = TextEditingController(text: "Old Email");
+  // final TextEditingController _phone = TextEditingController(text: "Old Phone");
+
+  final TextEditingController _pass = TextEditingController();
+  final TextEditingController _confirmPass = TextEditingController();
+
   final nameRegExp = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z]).{3,}$');
   final passwordRegExp =
       RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-  late String _password;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF273746),
+      backgroundColor: const Color(0xFF613CEA),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(40, 40, 40, 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Padding(
-              padding: EdgeInsets.only(top: 70, left: 40, bottom: 50),
+              padding: EdgeInsets.only(bottom: 40),
               child: Text(
                 'Registration',
                 style: TextStyle(
@@ -38,7 +49,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               child: Column(
                 children: [
                   CustomFormField(
-                    hintText: 'Name',
+                    // controller: _name,
+                    hintText: "Name",
+
                     validator: (val) {
                       if (!nameRegExp.hasMatch(val!)) return 'Enter valid name';
                       return null;
@@ -46,7 +59,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 10),
                   CustomFormField(
+                    // controller: _surname,
                     hintText: 'Surname',
+
                     validator: (val) {
                       if (!nameRegExp.hasMatch(val!)) {
                         return 'Enter valid surname';
@@ -56,7 +71,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 10),
                   CustomFormField(
+                    // controller: _patronymic,
                     hintText: 'Patronymic',
+
                     validator: (val) {
                       if (!nameRegExp.hasMatch(val!)) {
                         return 'Enter valid patronymic';
@@ -66,7 +83,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 10),
                   CustomFormField(
+                    // controller: _docNo,
                     hintText: 'Document No.',
+
+
                     validator: (val) {
                       final idExp = RegExp(r"^[0-9]{9}$");
 
@@ -78,7 +98,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 10),
                   CustomFormField(
+                    // controller: _phone,
                     hintText: 'Phone',
+
                     validator: (val) {
                       final phoneRegExp = RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
 
@@ -90,7 +112,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 10),
                   CustomFormField(
+                    // controller: _email,
                     hintText: 'Email',
+
                     validator: (val) {
                       final emailRegExp =
                           RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
@@ -103,23 +127,28 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 10),
                   CustomFormField(
+                    controller: _pass,
                     hintText: 'Password',
+
                     validator: (val) {
                       if (!passwordRegExp.hasMatch(val!)) {
-                        return 'Enter valid password';
-                      } else {
-                        _password = val;
+                        return 'Password must contain at least 1 upper case,1 lower case, numeric, and special character';
                       }
+
                       return null;
                     },
                   ),
                   const SizedBox(height: 10),
                   CustomFormField(
+                    controller: _confirmPass,
                     hintText: 'Repeat password',
+
                     validator: (val) {
-                      if ((!passwordRegExp.hasMatch(val!)) &&
-                          val != _password) {
-                        return 'Enter valid password';
+                      // if ((!passwordRegExp.hasMatch(val!))) {
+                      //   return 'Enter valid password';
+                      // }
+                      if(val != _pass.text) {
+                        return 'Not Match';
                       }
                       return null;
                     },
@@ -132,7 +161,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       padding: MaterialStateProperty.all(const EdgeInsets.only(
                           top: 20, bottom: 20, left: 90, right: 90)),
                       backgroundColor:
-                          MaterialStateProperty.all(const Color(0xFF3498DB)),
+                          MaterialStateProperty.all(Colors.white),
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
@@ -143,7 +172,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     },
                     child: const Text(
                       "Sign up",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 20, color: Color(0xFF613CEA)),
                     ),
                   ),
                 ],
@@ -164,7 +193,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   child: const Text('Log in',
                       style: TextStyle(
                           fontSize: 20,
-                          color: Color(0xFF3498DB),
+                          color: Colors.white,
                           fontWeight: FontWeight.w700)),
                 )
               ],
