@@ -178,6 +178,7 @@ class Processing {
       return Future.error("Exeption error");
     }
   }
+
   //here returning error is mean that user already registered
   static Future<String> registerUser(User user) async {
     try {

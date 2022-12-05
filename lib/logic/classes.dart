@@ -23,7 +23,7 @@ class User {
     name = json['name'];
     surname = json['surname'];
     patronymic = json['patronymic'];
-    passportId = json['passport_id'];
+    passportId = json['pasport_id'];
     phone = json['phone'];
     email = json['email'];
     password = json['password'];
