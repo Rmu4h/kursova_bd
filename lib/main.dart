@@ -23,7 +23,7 @@ class StorageApplication extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => const MainPage(),
+        '/': (context) =>  const MainPage(),  //SearchWidget MainPage
         '/login': (context) => const LoginPage(),
         '/registration': (context) => const RegistrationPage(),
         // '/main': (context) => const LoginPage(),

@@ -46,6 +46,7 @@ class Processing {
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         List<Product> list = parseResponse(response.body);
+        print('worked');
         return list;
       } else {
         print('adadsa');
