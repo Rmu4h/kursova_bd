@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:kursova_bd/logic/classes.dart';
+import '../../logic/processing.dart';
 
 class ReportPage extends StatelessWidget {
-  const ReportPage ({super.key});
+  const ReportPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +25,15 @@ class ReportPage extends StatelessWidget {
                     //     context,
                     //     MaterialPageRoute(
                     //         builder: (context) => const LoginPage()));
-                    Navigator.pushNamedAndRemoveUntil(context, "/login", (r) => false);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, "/login", (r) => false);
                   },
                 ),
               ],
             ),
-            const Text('ReportPage'),
+            const Text('ReportPage')
           ],
-        )
+        ),
       ),
     );
   }

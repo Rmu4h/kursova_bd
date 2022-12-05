@@ -23,7 +23,7 @@ class User {
     name = json['name'];
     surname = json['surname'];
     patronymic = json['patronymic'];
-    passportId = json['passport_id'];
+    passportId = json['pasport_id'];
     phone = json['phone'];
     email = json['email'];
     password = json['password'];
@@ -59,7 +59,7 @@ class Producer {
       required this.contactPhone});
 
   Producer.fromJson(Map<String, dynamic> json) {
-    producerId = json['producer_id'];
+    producerId = int.parse(json['producer_id']);
     name = json['name'];
     description = json['description'];
     location = json['location'];
@@ -68,7 +68,7 @@ class Producer {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['producer_id'] = producerId;
+    data['producer_id'] = producerId.toString();
     data['name'] = name;
     data['description'] = description;
     data['location'] = location;
