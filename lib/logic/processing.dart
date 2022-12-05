@@ -197,4 +197,66 @@ class Processing {
       return 'exeption';
     }
   }
+
+  static List<Producer> parseProducers(String responseBody) {
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed.map<Producer>((json) => Producer.fromJson(json)).toList();
+  }
+
+  static Future<List<Producer>> getProducers() async {
+    try {
+      var map = Map<String, dynamic>();
+      map['action'] = 'GET_PRODUCERS';
+      final response = await http.post(
+          Uri.http('192.168.0.105', '/dbkursach/producersactions.php'),
+          body: map); //instead of "localhost" input ur local IPv4
+      if (200 == response.statusCode) {
+        List<Producer> list = parseProducers(response.body);
+        return list;
+      } else {
+        //return <Producer>[];
+        return Future.error('Connection Error');
+      }
+    } catch (e) {
+      print('Помилка бля - ${e}');
+      return Future.error('Exeption');
+      //return <Producer>[];
+    }
+  }
+
+
+    static Future<String> addProducer(Producer producer) async {
+    try {
+      var map = producer.toJson();
+      map['action'] = 'ADD_PRODUCER';
+      final response = await http.post(
+          Uri.http('192.168.0.105', '/dbkursach/producersactions.php'),
+          body: map); //instead of "localhost" input ur local IPv4
+      if (200 == response.statusCode) {
+        return response.body;
+      } else {
+        return 'error';
+      }
+    } catch (e) {
+      return 'error';
+    }
+  }
+
+    static Future<String> deleteProducer(int producerId) async {
+    try {
+      var map = <String, dynamic>{};
+      map['action'] = 'DEL_PRODUCER';
+      map['producer_id'] = producerId.toString();
+      final response = await http.post(
+          Uri.http('192.168.0.105', '/dbkursach/producersactions.php'),
+          body: map); //instead of "localhost" input ur local IPv4
+      if (200 == response.statusCode) {
+        return response.body;
+      } else {
+        return 'error';
+      }
+    } catch (e) {
+      return 'error';
+    }
+  }
 }
