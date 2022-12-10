@@ -25,6 +25,8 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       body: pages[currentPage],
       bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: true,   // <-- HERE
+        showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         elevation: 0,
         selectedItemColor: const Color(0xFF613CEA),

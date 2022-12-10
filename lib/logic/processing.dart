@@ -11,7 +11,7 @@ class Processing {
   //   map['userid'] = ownerId.toString();
   //
   //   final response = await http.post(
-  //       Uri.http('192.168.0.105', '/dbkursach/itemactions.php'),
+  //       Uri.http('169.254.123.102', '/dbkursach/itemactions.php'),
   //       body: map); //instead of "localhost" input ur local IPv4
   //
   //   if (200 == response.statusCode) {
@@ -41,7 +41,7 @@ class Processing {
       map['action'] = 'GET_ITEMS';
       map['userid'] = userid.toString();
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/itemactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         List<Product> list = parseResponse(response.body);
@@ -68,7 +68,7 @@ class Processing {
       var map = product.toJson();
       map['action'] = 'ADD_ITEM';
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/itemactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -88,7 +88,7 @@ class Processing {
       map['userid'] = userid.toString();
       map['date'] = date;
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/itemactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         List<Product> list = parseResponse(response.body);
@@ -108,7 +108,7 @@ class Processing {
       var map = product.toJson();
       map['action'] = 'UPDATE_ITM';
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/itemactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -126,7 +126,7 @@ class Processing {
       map['action'] = 'DELETE_ITM';
       map['product_id'] = productId.toString();
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/itemactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -145,7 +145,7 @@ class Processing {
       map['action'] = 'DELETE_ITM';
       map['product_id'] = productId.toString();
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/itemactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -164,7 +164,7 @@ class Processing {
       map['email'] = email;
       map['password'] = password;
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/useraction.php'),
+          Uri.http('169.254.123.102', '/dbkursach/useraction.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         if (response.body == 'error') {
@@ -187,9 +187,10 @@ class Processing {
       map['action'] = 'SIGN_UP';
 
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/useraction.php'),
+          Uri.http('169.254.123.102', '/dbkursach/useraction.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
+        print('200');
         return response.body;
       } else {
         return 'Connection error';
@@ -209,7 +210,7 @@ class Processing {
       var map = Map<String, dynamic>();
       map['action'] = 'GET_PRODUCERS';
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/producersactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/producersactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         List<Producer> list = parseProducers(response.body);
@@ -231,7 +232,7 @@ class Processing {
       var map = producer.toJson();
       map['action'] = 'ADD_PRODUCER';
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/producersactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/producersactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -249,7 +250,7 @@ class Processing {
       map['action'] = 'DEL_PRODUCER';
       map['producer_id'] = producerId.toString();
       final response = await http.post(
-          Uri.http('192.168.0.105', '/dbkursach/producersactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/producersactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;

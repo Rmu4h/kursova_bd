@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../logic/classes.dart';
+import '../logic/processing.dart';
 import 'login-page.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -11,12 +13,12 @@ class RegistrationPage extends StatefulWidget {
 class _RegistrationPageState extends State<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
 
-  // final TextEditingController _name = TextEditingController(text: "Old Name");
-  // final TextEditingController _surname = TextEditingController(text: "Old Surname");
-  // final TextEditingController _patronymic = TextEditingController(text: "Old Patronymic");
-  // final TextEditingController _docNo = TextEditingController(text: "Old Name");
-  // final TextEditingController _email = TextEditingController(text: "Old Email");
-  // final TextEditingController _phone = TextEditingController(text: "Old Phone");
+  final TextEditingController _name = TextEditingController();
+  final TextEditingController _surname = TextEditingController();
+  final TextEditingController _patronymic = TextEditingController();
+  final TextEditingController _docNo = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
 
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
@@ -49,7 +51,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               child: Column(
                 children: [
                   CustomFormField(
-                    // controller: _name,
+                    controller: _name,
                     hintText: "Name",
 
                     validator: (val) {
@@ -59,7 +61,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 10),
                   CustomFormField(
-                    // controller: _surname,
+                    controller: _surname,
                     hintText: 'Surname',
 
                     validator: (val) {
@@ -71,7 +73,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 10),
                   CustomFormField(
-                    // controller: _patronymic,
+                    controller: _patronymic,
                     hintText: 'Patronymic',
 
                     validator: (val) {
@@ -83,7 +85,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 10),
                   CustomFormField(
-                    // controller: _docNo,
+                    controller: _docNo,
                     hintText: 'Document No.',
 
 
@@ -98,7 +100,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 10),
                   CustomFormField(
-                    // controller: _phone,
+                    controller: _phone,
                     hintText: 'Phone',
 
                     validator: (val) {
@@ -112,7 +114,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 10),
                   CustomFormField(
-                    // controller: _email,
+                    controller: _email,
                     hintText: 'Email',
 
                     validator: (val) {
@@ -165,9 +167,46 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        print('${_name.text} - _name is done');
+                        print('${_email.text} - _email is done');
+                        print('${_phone.text} - _phone.text is done');
+                        print('${_docNo.text} - _docNo.text is done');
+                        print('${_pass.text} - _pass.text is done');
+
+                        var newUser = User(
+                            userId: 2,
+                            name: _name.text,
+                            surname: _surname.text,
+                            patronymic: _patronymic.text,
+                            passportId: _docNo.text,
+                            phone: _phone.text,
+                            email: _email.text,
+                            password: _pass.text,
+                        );
+
+                        print('${newUser} - newUser already create');
+
+                        Processing.registerUser(newUser).then((value) {
+                          if(value == 'success'){
+                            print('ok');
+                          }
+                          if(value == 'error'){
+                            print('this email is registered');
+                          }
+                          if(value == 'Connection error'){
+                            print('Connection error');
+                          }
+                          if(value == 'exeption'){
+                            print('exeption');
+                          }
+                        }
+                        );
+                        print('${newUser} - registerUser func done');
+
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (_) => const LoginPage(),
                         ));
+
                       }
                     },
                     child: const Text(
