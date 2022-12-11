@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kursova_bd/authentication/registration-page.dart';
+import 'package:kursova_bd/logic/processing.dart';
 
+import '../logic/classes.dart';
 import '../mainui/navigation.dart';
+import '../mainui/pages/report.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,7 +17,6 @@ class LoginPage extends StatefulWidget {
 class CustomFormField extends StatelessWidget {
   CustomFormField({
     Key? key,
-
     this.hintText = '',
     this.inputFormatters,
     this.validator,
@@ -26,7 +28,6 @@ class CustomFormField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
   var controller;
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +51,8 @@ class _LoginPageState extends State<LoginPage> {
   //ключ який юзається для ідентифікації стану форми (це рома для себе, боді не чиати ALERT!!!)
   final _formKey = GlobalKey<FormState>();
 
+  final _email = TextEditingController();
+  final _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.white),
               ),
             ),
-      
+
             //inputs
             Container(
               margin: const EdgeInsets.all(40.0),
@@ -78,22 +81,27 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     CustomFormField(
+                      controller: _email,
                       hintText: 'Email',
                       validator: (val) {
-                        final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-      
-                        if (!emailRegExp.hasMatch(val!)) return 'Enter valid email';
+                        final emailRegExp =
+                            RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
+                        if (!emailRegExp.hasMatch(val!))
+                          return 'Enter valid email';
                         return null;
                       },
                     ),
                     const SizedBox(height: 20),
                     CustomFormField(
+                      controller: _password,
                       hintText: 'Password',
                       validator: (val) {
                         final passwordRegExp = RegExp(
                             r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-      
-                        if (!passwordRegExp.hasMatch(val!)) return 'Enter valid password';
+
+                        if (!passwordRegExp.hasMatch(val!))
+                          return 'Enter valid password';
                         return null;
                       },
                     ),
@@ -102,28 +110,39 @@ class _LoginPageState extends State<LoginPage> {
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25))),
-                        padding: MaterialStateProperty.all(const EdgeInsets.only(
-                            top: 20, bottom: 20, left: 90, right: 90)),
+                        padding: MaterialStateProperty.all(
+                            const EdgeInsets.only(
+                                top: 20, bottom: 20, left: 90, right: 90)),
                         backgroundColor:
-                            MaterialStateProperty.all( Colors.white),
+                            MaterialStateProperty.all(Colors.white),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
+                          var result = await Processing.userLogin(
+                              _email.text, _password.text);
+                          // print('${result is User} - result');
+                          if (result is User) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => const MainPage(),
+                            ));
+                          }
+
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => const MainPage(),
+                            builder: (_) => const ReportPage(),
                           ));
                         }
                       },
                       child: const Text(
                         "LOG IN",
-                        style: TextStyle(fontSize: 20, color: Color(0xFF6040E5)),
+                        style:
+                            TextStyle(fontSize: 20, color: Color(0xFF6040E5)),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-      
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -137,8 +156,8 @@ class _LoginPageState extends State<LoginPage> {
                             builder: (context) => const RegistrationPage()));
                   },
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(const Color(0xFFEBE7FF).withOpacity(0.1)
-                  )),
+                      backgroundColor: MaterialStateProperty.all(
+                          const Color(0xFFEBE7FF).withOpacity(0.1))),
                   child: const Text('Register',
                       style: TextStyle(
                           fontSize: 20,
