@@ -4,20 +4,24 @@ import 'package:kursova_bd/mainui/pages/producers.dart';
 import 'package:kursova_bd/mainui/pages/products.dart';
 import 'package:kursova_bd/mainui/pages/report.dart';
 
+import '../logic/classes.dart';
+
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final User currentuser;
+  const MainPage({super.key, required this.currentuser});
 
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
+  late final currentuser = widget.currentuser;
   int currentPage = 0;
-  List pages = const [
-    ProductPage(),
+  late List pages = [
+    ProductPage(currentuser: currentuser),
     ProducerPage(),
-    ReportPage(),
-    AccountPage()
+    ReportPage(currentuser: currentuser),
+    AccountPage(currentuser: currentuser,)
   ];
 
   @override

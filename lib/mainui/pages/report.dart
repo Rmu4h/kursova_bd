@@ -1,9 +1,12 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:kursova_bd/logic/classes.dart';
 import '../../logic/processing.dart';
 
 class ReportPage extends StatelessWidget {
-  const ReportPage({super.key});
+  final User currentuser;
+  const ReportPage({super.key, required this.currentuser});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class ReportPage extends StatelessWidget {
                     //     MaterialPageRoute(
                     //         builder: (context) => const LoginPage()));
                     Navigator.pushNamedAndRemoveUntil(
-                        context, "/login", (r) => false);
+                        context, "/", (r) => false);
                   },
                 ),
               ],

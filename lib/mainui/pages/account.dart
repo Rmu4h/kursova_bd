@@ -4,20 +4,26 @@ import 'package:kursova_bd/mainui/pages/products.dart';
 import 'package:kursova_bd/mainui/pages/report.dart';
 
 import '../../authentication/login-page.dart';
+import '../../logic/classes.dart';
 
 class AccountPage extends StatelessWidget {
-  const AccountPage({super.key});
+  final User currentuser;
+  const AccountPage({super.key, required this.currentuser});
 
   @override
   Widget build(BuildContext context) {
     final List<String> entries = [
-      'user Full Name',
-      'user Document No.',
-      'user Phone',
-      'user email',
+      'Name: ${currentuser.name}',
+      'Surname: ${currentuser.surname}',
+      'Patronymic ${currentuser.patronymic}',
+      'Document No.${currentuser.passportId}',
+      'user Phone: ${currentuser.phone}',
+      'user email ${currentuser.email}',
       'Password'
     ];
     final List<dynamic> icons = [
+      Icons.account_circle,
+      Icons.account_circle,
       Icons.account_circle,
       Icons.insert_drive_file_outlined,
       Icons.phone,
@@ -43,7 +49,7 @@ class AccountPage extends StatelessWidget {
                     ),
                     onPressed: () {
                       print('sent');
-                      Navigator.pushNamedAndRemoveUntil(context, "/login", (r) => false);
+                      Navigator.pushNamedAndRemoveUntil(context, "/", (r) => false);
                     },
                   ),
                 ],

@@ -26,7 +26,7 @@ class ProducerPage extends StatelessWidget {
                   //     MaterialPageRoute(
                   //         builder: (context) => const LoginPage()));
                   Navigator.pushNamedAndRemoveUntil(
-                      context, "/login", (r) => false);
+                      context, "/", (r) => false);
                 },
               ),
             ],

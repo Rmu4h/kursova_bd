@@ -3,9 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:kursova_bd/authentication/registration-page.dart';
 import 'package:kursova_bd/logic/processing.dart';
 
-import '../logic/classes.dart';
 import '../mainui/navigation.dart';
-import '../mainui/pages/report.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -116,20 +114,39 @@ class _LoginPageState extends State<LoginPage> {
                         backgroundColor:
                             MaterialStateProperty.all(Colors.white),
                       ),
-                      onPressed: () async {
+                      onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          var result = await Processing.userLogin(
-                              _email.text, _password.text);
-                          // print('${result is User} - result');
-                          if (result is User) {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => const MainPage(),
-                            ));
-                          }
-
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => const ReportPage(),
-                          ));
+                          Processing.userLogin(_email.text, _password.text)
+                              .then((value) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => MainPage(
+                                  currentuser: value,
+                                ),
+                              ),
+                            );
+                          }).onError((error, stackTrace) {
+                            showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                title: const Text('Error'),
+                                content: Text(error.toString()),
+                                actions: <Widget>[
+                                  FloatingActionButton(
+                                    child: const Text('Close!'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  )
+                                ],
+                              ),
+                            );
+                          });
+                          // Navigator.of(context).push(
+                          //   MaterialPageRoute(
+                          //     builder: (_) => const MainPage(),
+                          //   ),
+                          // );
                         }
                       },
                       child: const Text(

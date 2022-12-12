@@ -7,7 +7,8 @@ import 'package:intl/intl.dart';
 
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({super.key});
+  final User currentuser;
+  const ProductPage({super.key, required this.currentuser});
 
   @override
   State<ProductPage> createState() => _ProductPageState();
@@ -57,7 +58,7 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                   onPressed: () {
                     Navigator.pushNamedAndRemoveUntil(
-                        context, "/login", (r) => false);
+                        context, "/", (r) => false);
                   },
                 ),
               ],
@@ -537,7 +538,7 @@ class _ProductPageState extends State<ProductPage> {
                                                 amount: int.parse(_amount.text),
                                                 price: double.parse(_price.text),
                                                 madeOf: int.parse(_dropdownValue),
-                                                ownerId: 22);
+                                                ownerId: widget.currentuser.userId);
 
                                             Processing.putProduct(newItem);
                                             _refreshIndicatorKey.currentState?.show();
@@ -569,7 +570,7 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   Future refresh() async {
-    final products = await Processing.getProducts(22).then((value) {
+    final products = await Processing.getProducts(widget.currentuser.userId).then((value) {
       namesProducts = value;
 
       return namesProducts;
@@ -584,7 +585,7 @@ class _ProductPageState extends State<ProductPage> {
 
   //це у нас _initPhotos
   downloadList() {
-    return Processing.getProducts(22).then((value) {
+    return Processing.getProducts(widget.currentuser.userId).then((value) {
       namesProducts = value;
 
       return namesProducts;
