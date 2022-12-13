@@ -4,8 +4,6 @@ import 'authentication/registration-page.dart';
 import 'mainui/navigation.dart';
 import 'mainui/pages/account.dart';
 
-
-
 void main() {
   runApp(const StorageApplication());
 }
@@ -23,11 +21,12 @@ class StorageApplication extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) =>  const LoginPage(),  //SearchWidget MainPage
-        //'/main': (context) => const MainPage(),
+        '/': (context) => const LoginPage(), //SearchWidget MainPage
+        '/main': (context) => WillPopScope(
+            onWillPop: () => Future.value(false),
+            child: const ArgsForMainPage()),
         '/registration': (context) => const RegistrationPage(),
         // '/main': (context) => const LoginPage(),
-
       },
     );
   }

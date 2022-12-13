@@ -106,8 +106,11 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 20),
                     TextButton(
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25))),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
                         padding: MaterialStateProperty.all(
                             const EdgeInsets.only(
                                 top: 20, bottom: 20, left: 90, right: 90)),
@@ -118,30 +121,38 @@ class _LoginPageState extends State<LoginPage> {
                         if (_formKey.currentState!.validate()) {
                           Processing.userLogin(_email.text, _password.text)
                               .then((value) {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => MainPage(
-                                  currentuser: value,
+                            Navigator.popAndPushNamed(context, '/main', arguments: value);
+                          }).onError(
+                            (error, stackTrace) {
+                              showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: const Text('Account not find'),
+                                  content: Text(error.toString()),
+                                  actions: <Widget>[
+                                    Center(
+                                      child: SizedBox(
+                                        height: 40,
+                                        width: 90,
+                                        child: FloatingActionButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          backgroundColor:
+                                              const Color(0xFF613CEA),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: const Text('Close'),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            );
-                          }).onError((error, stackTrace) {
-                            showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                title: const Text('Error'),
-                                content: Text(error.toString()),
-                                actions: <Widget>[
-                                  FloatingActionButton(
-                                    child: const Text('Close!'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  )
-                                ],
-                              ),
-                            );
-                          });
+                              );
+                            },
+                          );
                           // Navigator.of(context).push(
                           //   MaterialPageRoute(
                           //     builder: (_) => const MainPage(),
