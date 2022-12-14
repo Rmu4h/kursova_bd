@@ -169,7 +169,7 @@ class Processing {
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         if (response.body == 'error') {
-          return Future.error("WrongEmailPassword");
+          return Future.error("Wrong Email or Password");
         }
         User tempUser = User.fromJson(json.decode(response.body));
         return tempUser;
@@ -192,6 +192,25 @@ class Processing {
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         print('200');
+        return response.body;
+      } else {
+        return 'Connection error';
+      }
+    } catch (e) {
+      return 'exeption';
+    }
+  }
+
+
+    static Future<String> updateUser(User user) async {
+    try {
+      var map = user.toJson();
+      map['action'] = 'UPDATE_USER';
+
+      final response = await http.post(
+          Uri.http('192.168.0.103', '/dbkursach/useraction.php'),
+          body: map); //instead of "localhost" input ur local IPv4
+      if (200 == response.statusCode) {
         return response.body;
       } else {
         return 'Connection error';

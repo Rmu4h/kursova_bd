@@ -64,3 +64,14 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
+
+class ArgsForMainPage extends StatelessWidget {
+  const ArgsForMainPage({super.key});
+
+
+  @override
+  Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as User;
+    return MainPage(currentuser: args);
+  }
+}

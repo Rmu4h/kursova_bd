@@ -174,7 +174,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         print('${_pass.text} - _pass.text is done');
 
                         var newUser = User(
-                            userId: 2,
+                            userId: 0,
                             name: _name.text,
                             surname: _surname.text,
                             patronymic: _patronymic.text,
@@ -188,13 +188,91 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                         Processing.registerUser(newUser).then((value) {
                           if(value == 'success'){
-                            print('ok');
+                            showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: const Text('Done!'),
+                                  content: const Text("Successfully registered"),
+                                  actions: <Widget>[
+                                    Center(
+                                      child: SizedBox(
+                                        height: 40,
+                                        width: 90,
+                                        child: FloatingActionButton(
+                                          onPressed: () {
+                                            Navigator.pushNamedAndRemoveUntil(context, "/", (r) => false);
+                                          },
+                                          backgroundColor:
+                                              const Color(0xFF613CEA),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: const Text('Close'),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
                           }
                           if(value == 'error'){
-                            print('this email is registered');
+                            showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: const Text('Already exist!'),
+                                  content: const Text("This e-mail already used!"),
+                                  actions: <Widget>[
+                                    Center(
+                                      child: SizedBox(
+                                        height: 40,
+                                        width: 90,
+                                        child: FloatingActionButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          backgroundColor:
+                                              const Color(0xFF613CEA),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: const Text('Close'),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
                           }
                           if(value == 'Connection error'){
-                            print('Connection error');
+                            showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: const Text('Erorr'),
+                                  content: const Text("Connection error!"),
+                                  actions: <Widget>[
+                                    Center(
+                                      child: SizedBox(
+                                        height: 40,
+                                        width: 90,
+                                        child: FloatingActionButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          backgroundColor:
+                                              const Color(0xFF613CEA),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: const Text('Close'),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
                           }
                           if(value == 'exeption'){
                             print('exeption');
@@ -203,9 +281,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         );
                         print('${newUser} - registerUser func done');
 
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => const LoginPage(),
-                        ));
 
                       }
                     },

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kursova_bd/logic/processing.dart';
+import 'package:kursova_bd/mainui/navigation.dart';
 import 'package:kursova_bd/mainui/pages/producers.dart';
 import 'package:kursova_bd/mainui/pages/products.dart';
 import 'package:kursova_bd/mainui/pages/report.dart';
@@ -44,12 +46,12 @@ class AccountPage extends StatelessWidget {
                 children: [
                   IconButton(
                     icon: const Icon(
-                        Icons.logout,
-                        color: Color(0xFFA2A6B1),
+                      Icons.logout,
+                      color: Color(0xFFA2A6B1),
                     ),
                     onPressed: () {
                       print('sent');
-                      Navigator.pushNamedAndRemoveUntil(context, "/", (r) => false);
+                      Navigator.popAndPushNamed(context, "/");
                     },
                   ),
                 ],
@@ -81,7 +83,7 @@ class AccountPage extends StatelessWidget {
                               Text(' ${entries[index]}',
                                   // textAlign: TextAlign.center,
                                   style: const TextStyle(
-                                        // color: Color(0xFF613CEA),
+                                      // color: Color(0xFF613CEA),
                                       )),
                             ],
                           ));
@@ -98,16 +100,21 @@ class AccountPage extends StatelessWidget {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF613CEA),
-                  padding: const EdgeInsets.fromLTRB(40,20,40,20),
+                  padding: const EdgeInsets.fromLTRB(40, 20, 40, 20),
                 ),
                 onPressed: () {
-                  final TextEditingController _name = TextEditingController(text: "Old Name");
-                  final TextEditingController _surname = TextEditingController(text: "Old Surname");
-                  final TextEditingController _patronymic = TextEditingController(text: "Old Patronymic");
-                  final TextEditingController _docNo = TextEditingController(text: "Old Name");
-                  final TextEditingController _email = TextEditingController(text: "Old Email");
-                  final TextEditingController _phone = TextEditingController(text: "Old Phone");
-
+                  final TextEditingController _name =
+                      TextEditingController(text: "${currentuser.name}");
+                  final TextEditingController _surname =
+                      TextEditingController(text: "${currentuser.surname}");
+                  final TextEditingController _patronymic =
+                      TextEditingController(text: "${currentuser.patronymic}");
+                  final TextEditingController _docNo =
+                      TextEditingController(text: "${currentuser.passportId}");
+                  final TextEditingController _email =
+                      TextEditingController(text: "${currentuser.email}");
+                  final TextEditingController _phone =
+                      TextEditingController(text: "${currentuser.phone}");
 
                   showModalBottomSheet<void>(
                     context: context,
@@ -119,7 +126,7 @@ class AccountPage extends StatelessWidget {
                     builder: (_) {
                       return Container(
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 60),
-                        height: MediaQuery.of(context).size.height* 0.9,
+                        height: MediaQuery.of(context).size.height * 0.9,
                         // color: Colors.amber,
                         child: Center(
                           child: Column(
@@ -130,11 +137,11 @@ class AccountPage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   IconButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      icon: const Icon(
-                                        Icons.close,
-                                        color: Color(0xFFA2A6B1),
-                                      ),
+                                    onPressed: () => Navigator.pop(context),
+                                    icon: const Icon(
+                                      Icons.close,
+                                      color: Color(0xFFA2A6B1),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -149,12 +156,12 @@ class AccountPage extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(height: 20),
-
                                   CustomFormField(
                                     hintText: "Name",
                                     controller: _name,
                                     validator: (val) {
-                                      if (!nameRegExp.hasMatch(val!)) return 'Enter valid name';
+                                      if (!nameRegExp.hasMatch(val!))
+                                        return 'Enter valid name';
                                       return null;
                                     },
                                   ),
@@ -162,7 +169,6 @@ class AccountPage extends StatelessWidget {
                                   CustomFormField(
                                     hintText: 'Surname',
                                     controller: _surname,
-
                                     validator: (val) {
                                       if (!nameRegExp.hasMatch(val!)) {
                                         return 'Enter valid surname';
@@ -174,7 +180,6 @@ class AccountPage extends StatelessWidget {
                                   CustomFormField(
                                     hintText: 'Patronymic',
                                     controller: _patronymic,
-
                                     validator: (val) {
                                       if (!nameRegExp.hasMatch(val!)) {
                                         return 'Enter valid patronymic';
@@ -186,7 +191,6 @@ class AccountPage extends StatelessWidget {
                                   CustomFormField(
                                     hintText: 'Old Document No.',
                                     controller: _docNo,
-
                                     validator: (val) {
                                       final idExp = RegExp(r"^[0-9]{9}$");
 
@@ -200,9 +204,9 @@ class AccountPage extends StatelessWidget {
                                   CustomFormField(
                                     hintText: 'Phone',
                                     controller: _phone,
-
                                     validator: (val) {
-                                      final phoneRegExp = RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
+                                      final phoneRegExp =
+                                          RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
 
                                       if (!phoneRegExp.hasMatch(val!)) {
                                         return 'Enter valid Phone';
@@ -214,10 +218,9 @@ class AccountPage extends StatelessWidget {
                                   CustomFormField(
                                     hintText: 'Email',
                                     controller: _email,
-
                                     validator: (val) {
-                                      final emailRegExp =
-                                      RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                                      final emailRegExp = RegExp(
+                                          r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
                                       if (!emailRegExp.hasMatch(val!)) {
                                         return 'Enter valid email';
@@ -232,12 +235,97 @@ class AccountPage extends StatelessWidget {
                                   backgroundColor: const Color(0xFF613CEA),
                                   // backgroundColor: const Color(0xFFA2A6B1),
 
-                                  padding: const EdgeInsets.fromLTRB(40,20,40,20),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(40, 20, 40, 20),
                                 ),
                                 child: const Text('SAVE CHANGES'),
-                                onPressed: () => {
-                                  Navigator.pop(context),
-                                  print('sent'),
+                                onPressed: () {
+                                  var temp_user = User(
+                                    userId: currentuser.userId,
+                                    name: _name.text,
+                                    surname: _surname.text,
+                                    patronymic: _patronymic.text,
+                                    phone: _phone.text,
+                                    passportId: _docNo.text,
+                                    email: _email.text,
+                                    password: currentuser.password,
+                                  );
+                                  Processing.updateUser(temp_user)
+                                      .then((value) {
+                                    if (value == 'success') {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (_) => WillPopScope(
+                                          onWillPop: ()=>Future.value(false),
+                                          child: AlertDialog(
+                                            title: const Text('Account edited!'),
+                                            content: const Text(
+                                                'Successfully edited profile'),
+                                            actions: <Widget>[
+                                              Center(
+                                                child: SizedBox(
+                                                  height: 40,
+                                                  width: 90,
+                                                  child: FloatingActionButton(
+                                                    onPressed: () {
+                                                      Navigator
+                                                          .pushNamedAndRemoveUntil(
+                                                              context,
+                                                              '/main',
+                                                              arguments:
+                                                                  temp_user,
+                                                              ((route) => false));
+                                                    },
+                                                    backgroundColor:
+                                                        const Color(0xFF613CEA),
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                    ),
+                                                    child: const Text('Close'),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (_) => AlertDialog(
+                                          title: const Text('Error ocured!'),
+                                          content: const Text(
+                                              'This e-mail used by another user'),
+                                          actions: <Widget>[
+                                            Center(
+                                              child: SizedBox(
+                                                height: 40,
+                                                width: 90,
+                                                child: FloatingActionButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  backgroundColor:
+                                                      const Color(0xFF613CEA),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                  ),
+                                                  child: const Text('Close'),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                  });
+                                  Navigator.pop(context);
+                                  print('sent');
                                 },
                               ),
                             ],
@@ -256,11 +344,5 @@ class AccountPage extends StatelessWidget {
     );
   }
 
-
-
-  showModalWindow(){
-
-  }
+  showModalWindow() {}
 }
-
-
