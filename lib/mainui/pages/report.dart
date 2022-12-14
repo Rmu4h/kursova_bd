@@ -29,7 +29,6 @@ class _ReportPageState extends State<ReportPage> {
     super.initState();
 
     myFuture = downloadList();
-    // namesProducts = namesProducts
   }
 
   Widget build(BuildContext context) {
@@ -47,11 +46,6 @@ class _ReportPageState extends State<ReportPage> {
                     color: Color(0xFFA2A6B1),
                   ),
                   onPressed: () {
-                    print('sent');
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => const LoginPage()));
                     Navigator.pushNamedAndRemoveUntil(
                         context, "/", (r) => false);
                   },
@@ -157,9 +151,6 @@ class _ReportPageState extends State<ReportPage> {
               border: TableBorder.symmetric(
                   inside: const BorderSide(width: 2, color: Colors.black)
               ),
-              // border: const TableBorder(
-              //     horizontalInside: BorderSide(width: 2),
-              // ),
 
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               children: const [
