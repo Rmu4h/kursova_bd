@@ -50,8 +50,7 @@ class _ProducerPageState extends State<ProducerPage> {
                           //     context,
                           //     MaterialPageRoute(
                           //         builder: (context) => const LoginPage()));
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, "/", (r) => false);
+                          Navigator.popAndPushNamed(context, "/");
                         },
                       ),
                     ],
@@ -97,7 +96,7 @@ class _ProducerPageState extends State<ProducerPage> {
                                                     namesProducer[index].name);
                                                 Processing.deleteProducer(
                                                     namesProducer[index]
-                                                        .productId); // замінив з snapshot.data
+                                                        .producerId); // замінив з snapshot.data
 
                                                 setState(() {
                                                   namesProducer.removeAt(
@@ -119,12 +118,11 @@ class _ProducerPageState extends State<ProducerPage> {
                                                   children: [
                                                     ListTile(
                                                         leading: Image.asset(
-                                                            'assets/images/flag.svg.png',
-                                                            fit: BoxFit.cover,
-                                                            width: 60,
-                                                            height: 40,
-                                                          ),
-
+                                                          'assets/images/flag.svg.png',
+                                                          fit: BoxFit.cover,
+                                                          width: 60,
+                                                          height: 40,
+                                                        ),
                                                         title: Column(
                                                           children: [
                                                             Text(
@@ -141,7 +139,7 @@ class _ProducerPageState extends State<ProducerPage> {
                                                               ),
                                                             ),
                                                             Text(
-                                                              '${namesProducer[index].description} - description',
+                                                              'Description: ${namesProducer[index].description}',
                                                               // замінив з snapshot.data
                                                               textAlign:
                                                                   TextAlign
@@ -154,7 +152,20 @@ class _ProducerPageState extends State<ProducerPage> {
                                                               ),
                                                             ),
                                                             Text(
-                                                              '${namesProducer[index].contactPhone} - contact-Phone',
+                                                              'Contact phone: ${namesProducer[index].contactPhone}',
+                                                              // замінив з snapshot.data
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              'Location: ${namesProducer[index].location}',
                                                               // замінив з snapshot.data
                                                               textAlign:
                                                                   TextAlign
@@ -168,20 +179,7 @@ class _ProducerPageState extends State<ProducerPage> {
                                                             ),
                                                           ],
                                                         ),
-                                                        trailing: SizedBox(
-                                                            child:
-                                                                FloatingActionButton(
-                                                          onPressed: () =>
-                                                              _dialogBuilder(
-                                                                  context),
-                                                          tooltip:
-                                                              'Add new Producer',
-                                                          child: const Icon(
-                                                            Icons.edit,
-                                                            color: Colors.white,
-                                                            size: 20.0,
-                                                          ),
-                                                        ))),
+                                                        ),
                                                   ],
                                                 ),
                                               ),
@@ -211,151 +209,194 @@ class _ProducerPageState extends State<ProducerPage> {
               right: 30.0,
               bottom: 30.0,
               child: FloatingActionButton(
-                  onPressed: () {
-                    final TextEditingController _name = TextEditingController();
-                    final TextEditingController _description = TextEditingController();
-                    final TextEditingController _location = TextEditingController();
-                    final TextEditingController _contactPhone = TextEditingController();
+                onPressed: () {
+                  final TextEditingController _name = TextEditingController();
+                  final TextEditingController _description =
+                      TextEditingController();
+                  final TextEditingController _location =
+                      TextEditingController();
+                  final TextEditingController _contactPhone =
+                      TextEditingController();
 
+                  showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled: true,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(35),
+                            topRight: Radius.circular(35))),
+                    builder: (_) {
+                      // String _dropdownValue = _madeNumber.first;
+                      print('new in showModalBottomSheet');
 
+                      return StatefulBuilder(builder:
+                          (BuildContext context, StateSetter setState) {
+                        print('new in StatefulBuilder window');
 
-                    showModalBottomSheet<void>(
-                      context: context,
-                      isScrollControlled: true,
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(35),
-                              topRight: Radius.circular(35))),
-                      builder: (_) {
-                        // String _dropdownValue = _madeNumber.first;
-                        print('new in showModalBottomSheet');
-
-                        return StatefulBuilder(
-                            builder: (BuildContext context, StateSetter setState) {
-                              print('new in StatefulBuilder window');
-
-                              return Container(
-                                padding: const EdgeInsets.fromLTRB(20, 0, 20, 60),
-                                height: MediaQuery.of(context).size.height * 0.9,
-                                child: Scaffold(
-                                  resizeToAvoidBottomInset: true,
-                                  body: ListView(
-                                    children: <Widget>[
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          IconButton(
-                                            onPressed: () => Navigator.pop(context),
-                                            icon: const Icon(
-                                              Icons.close,
-                                              color: Color(0xFFA2A6B1),
-                                            ),
-                                          ),
-                                        ],
+                        return Container(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 60),
+                          height: MediaQuery.of(context).size.height * 0.9,
+                          child: Scaffold(
+                            resizeToAvoidBottomInset: true,
+                            body: ListView(
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      icon: const Icon(
+                                        Icons.close,
+                                        color: Color(0xFFA2A6B1),
                                       ),
-                                      Form(
-                                        key: _formKeyshowModal,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text(
-                                              'Add new producers',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                // height: 5,
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                            CustomFormField(
-                                              hintText: "Enter product name",
-                                              controller: _name,
-                                              validator: (val) {
-                                                if (!nameRegExp.hasMatch(val!))
-                                                  return 'Enter valid name';
-                                                return null;
-                                              },
-                                            ),
-                                            // const SizedBox(height: 10),
-                                            CustomFormField(
-                                              hintText: "Enter location",
-                                              controller: _location,
-                                              validator: (val) {
-                                                if (!locationRegExp.hasMatch(val!))
-                                                  return 'Description can contain up to 70 characters';
-                                                return null;
-                                              },
-                                            ),
-                                            // const SizedBox(height: 10),
-                                            CustomFormField(
-                                              hintText: "Enter new description",
-                                              controller: _description,
-                                              validator: (val) {
-                                                if (!descriptionRegExp.hasMatch(val!))
-                                                  return 'Description can contain up to 70 characters';
-                                                return null;
-                                              },
-                                            ),
-                                            // const SizedBox(height: 10,),
-                                            CustomFormField(
-                                              hintText: 'Phone',
-                                              controller: _contactPhone,
-                                              validator: (val) {
-                                                final phoneRegExp =
-                                                RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
+                                    ),
+                                  ],
+                                ),
+                                Form(
+                                  key: _formKeyshowModal,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text(
+                                        'Add new producers',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          //height: 5,
 
-                                                if (!phoneRegExp.hasMatch(val!)) {
-                                                  return 'Enter valid Phone';
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                            ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: const Color(0xFF613CEA),
-                                                // backgroundColor: const Color(0xFFA2A6B1),
-
-                                                padding: const EdgeInsets.fromLTRB(
-                                                    40, 20, 40, 20),
-                                              ),
-                                              child: const Text('SAVE CHANGES'),
-                                              onPressed: () {
-                                                // if (_formKey.currentState!.validate()) {
-                                                //   var newItem = Product(
-                                                //       productId: 0,
-                                                //       name: _name.text,
-                                                //       dateOfReceipt: _dateOfReceipt.text,
-                                                //       expirationDate: _expirationDate.text,
-                                                //       amount: int.parse(_amount.text),
-                                                //       price: double.parse(_price.text),
-                                                //       madeOf: int.parse(_dropdownValue),
-                                                //       ownerId: widget.currentuser.userId);
-                                                //
-                                                //   Processing.putProduct(newItem);
-                                                //   _refreshIndicatorKey.currentState?.show();
-                                                //   Navigator.pop(context);
-                                                // }
-                                              },
-                                            ),
-                                          ],
+                                          fontSize: 20,
                                         ),
+                                      ),
+                                      SizedBox(height: 15),
+                                      CustomFormField(
+                                        hintText: "Enter product name",
+                                        controller: _name,
+                                        validator: (val) {
+                                          if (!nameRegExp.hasMatch(val!))
+                                            return 'Enter valid name';
+                                          return null;
+                                        },
+                                      ),
+                                      SizedBox(height: 15),
+                                      // const SizedBox(height: 10),
+                                      CustomFormField(
+                                        hintText: "Enter location",
+                                        controller: _location,
+                                        validator: (val) {
+                                          if (!locationRegExp.hasMatch(val!))
+                                            return 'Description can contain up to 70 characters';
+                                          return null;
+                                        },
+                                      ),
+                                      SizedBox(height: 15),
+                                      // const SizedBox(height: 10),
+                                      CustomFormField(
+                                        hintText: "Enter new description",
+                                        controller: _description,
+                                        validator: (val) {
+                                          if (!descriptionRegExp.hasMatch(val!))
+                                            return 'Description can contain up to 70 characters';
+                                          return null;
+                                        },
+                                      ),
+                                      SizedBox(height: 15),
+                                      // const SizedBox(height: 10,),
+                                      CustomFormField(
+                                        hintText: 'Phone',
+                                        controller: _contactPhone,
+                                        validator: (val) {
+                                          final phoneRegExp = RegExp(
+                                              r'(^(?:[+0]9)?[0-9]{10,12}$)');
+
+                                          if (!phoneRegExp.hasMatch(val!)) {
+                                            return 'Enter valid Phone';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      SizedBox(height: 15),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              const Color(0xFF613CEA),
+                                          // backgroundColor: const Color(0xFFA2A6B1),
+
+                                          padding: const EdgeInsets.fromLTRB(
+                                              40, 20, 40, 20),
+                                        ),
+                                        child: const Text('SAVE CHANGES'),
+                                        onPressed: () {
+                                          if (_formKeyshowModal.currentState!
+                                              .validate()) {
+                                            var newItem = Producer(
+                                              producerId: 0,
+                                              name: _name.text,
+                                              description: _description.text,
+                                              location: _location.text,
+                                              contactPhone: _contactPhone.text,
+                                            );
+                                            Processing.addProducer(newItem)
+                                                .then((value) {
+                                              if (value == 'success') {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (_) => AlertDialog(
+                                                    title: const Text(
+                                                        'Successfuly added!'),
+                                                    content: const Text(
+                                                        'New producer was created'),
+                                                    actions: <Widget>[
+                                                      Center(
+                                                        child: SizedBox(
+                                                          height: 40,
+                                                          width: 90,
+                                                          child:
+                                                              FloatingActionButton(
+                                                            onPressed: () {
+                                                              Navigator.popUntil(context, ModalRoute.withName('/main'));
+                                                            },
+                                                            backgroundColor:
+                                                                const Color(
+                                                                    0xFF613CEA),
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                            ),
+                                                            child: const Text(
+                                                                'Close'),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              }
+                                            });
+                                            _refreshIndicatorKey.currentState
+                                                ?.show();
+                                          }
+                                        },
                                       ),
                                     ],
                                   ),
                                 ),
-                              );
-                            }
+                              ],
+                            ),
+                          ),
                         );
-                      },
-                    );
-                  },
-                  tooltip: 'Add new item',
-                  backgroundColor: Colors.pink,
-                  child: const Icon(
-                    Icons.add,
-                  ),
-              )
-
-          )
+                      });
+                    },
+                  );
+                },
+                tooltip: 'Add new item',
+                backgroundColor: Colors.pink,
+                child: const Icon(
+                  Icons.add,
+                ),
+              ))
         ],
       ),
     );
@@ -389,8 +430,6 @@ class _ProducerPageState extends State<ProducerPage> {
     final TextEditingController _description = TextEditingController();
     final TextEditingController _location = TextEditingController();
     final TextEditingController _phone = TextEditingController();
-
-
 
     return showDialog<void>(
       context: context,

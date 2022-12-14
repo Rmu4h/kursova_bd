@@ -57,8 +57,7 @@ class _ProductPageState extends State<ProductPage> {
                     color: Color(0xFFA2A6B1),
                   ),
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, "/", (r) => false);
+                    Navigator.popAndPushNamed(context, "/");
                   },
                 ),
               ],
@@ -194,7 +193,7 @@ class _ProductPageState extends State<ProductPage> {
                                                       ],
                                                     ),
                                                     subtitle: Text(
-                                                      '\$${namesProducts[index].price * namesProducts[index].amount}',
+                                                      '\$${namesProducts[index].price}',
                                                       // замінив з snapshot.data
                                                       textAlign:
                                                           TextAlign.center,

@@ -46,8 +46,7 @@ class _ReportPageState extends State<ReportPage> {
                     color: Color(0xFFA2A6B1),
                   ),
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, "/", (r) => false);
+                    Navigator.popAndPushNamed(context, "/");
                   },
                 ),
               ],
