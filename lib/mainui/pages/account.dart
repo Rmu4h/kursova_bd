@@ -15,17 +15,17 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> entries = [
-      'Name: ${currentuser.name}',
-      'Surname: ${currentuser.surname}',
-      'Patronymic ${currentuser.patronymic}',
+      'Full Name: ${currentuser.name} ${currentuser.surname} ${currentuser.patronymic}',
+      // 'Surname: ${currentuser.surname}',
+      // 'Patronymic ${currentuser.patronymic}',
       'Document No.${currentuser.passportId}',
       'user Phone: ${currentuser.phone}',
       'user email ${currentuser.email}',
       'Password'
     ];
     final List<dynamic> icons = [
-      Icons.account_circle,
-      Icons.account_circle,
+      // Icons.account_circle,
+      // Icons.account_circle,
       Icons.account_circle,
       Icons.insert_drive_file_outlined,
       Icons.phone,
