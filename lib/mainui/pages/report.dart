@@ -274,12 +274,16 @@ class _ReportPageState extends State<ReportPage> {
 
   Widget createTable(lengthTable, index) {
     List<TableRow> rows = [];
+    print('${lengthTable} - lengthTable var');
+    // for (int i = 0; i < lengthTable; i++) {
+    //   print('${i} - i var');
 
-    for (int i = 1; i < lengthTable; i++) {
       var itemFromDate = DateTime.parse(namesProducts[index].dateOfReceipt);
       var itemToDate = DateTime.parse(namesProducts[index].expirationDate);
 
       if(itemFromDate.isAfter(fromDate) && itemToDate.isBefore(toDate)){
+        print('${index} - index var');
+
         rows.add(TableRow(children: [
           Text(
             namesProducts[index].name,
@@ -307,7 +311,7 @@ class _ReportPageState extends State<ReportPage> {
           ),
         ]));
       }
-    }
+    // }
     return Table(
         border: TableBorder.all(),
         children: rows,
