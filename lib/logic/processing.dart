@@ -82,12 +82,13 @@ class Processing {
   }
 
   static Future<List<Product>> getProductsByDate(
-      int userid, String date) async {
+      int userid, String date_from, String date_to) async {
     try {
       var map = <String, dynamic>{};
       map['action'] = 'GET_ITEMS_BY_DATE';
       map['userid'] = userid.toString();
-      map['date'] = date;
+      map['date_to'] = date_to;
+      map['date_from'] = date_from;
       final response = await http.post(
           Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
