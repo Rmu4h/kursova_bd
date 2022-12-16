@@ -239,16 +239,9 @@ class _ProductPageState extends State<ProductPage> {
                                                           child:
                                                               FloatingActionButton(
                                                             onPressed: () {
-                                                              if (namesProducts[
-                                                                          index]
-                                                                      .amount > // замінив з snapshot.data
-                                                                  1) {
+                                                              if (namesProducts[index].amount > 1) {
                                                                 setState(() {
-                                                                  namesProducts[
-                                                                          index] // замінив з snapshot.data
-                                                                      .amount -= 1;
-                                                                  // namesProducts[index]    // замінив з snapshot.data
-                                                                  //     .price -= 1000;
+                                                                  namesProducts[index].amount -= 1;
                                                                 });
                                                                 //функція яка обновляє амоинт
                                                                 Processing.updateProduct(
@@ -268,6 +261,7 @@ class _ProductPageState extends State<ProductPage> {
                                                         ),
                                                       ],
                                                     ),
+                                                    onTap: () => dialogBuilderEditProduct(context, namesProducts[index]),
                                                   ),
                                                 ],
                                               )),
@@ -589,5 +583,246 @@ class _ProductPageState extends State<ProductPage> {
 
       return namesProducts;
     });
+  }
+
+  Future<void> dialogBuilderEditProduct(BuildContext context, editProductItem) {
+    final _formKey = GlobalKey<FormState>();
+
+    final TextEditingController _name = TextEditingController();
+    final TextEditingController _description = TextEditingController();
+    final TextEditingController _location = TextEditingController();
+    final TextEditingController _phone = TextEditingController();
+    final TextEditingController _dateOfReceipt =
+    TextEditingController(text: '2022-11-29');
+    final TextEditingController _expirationDate =
+    TextEditingController();
+    final TextEditingController _amount = TextEditingController();
+    final TextEditingController _price = TextEditingController();
+    final TextEditingController _made_of = TextEditingController(text: '');
+    final TextEditingController _ownerId = TextEditingController();
+
+
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        var heightAlert = MediaQuery.of(context).size.height;
+
+
+        return StatefulBuilder(
+            builder: (context, setState) {
+              return Scaffold(
+                resizeToAvoidBottomInset: true,
+                body: Center(
+                  child: SizedBox(
+                    height: heightAlert * 0.75,
+                    child: AlertDialog(
+                      // insetPadding: EdgeInsets.symmetric(vertical: height),
+                        title: const Text('Change producer'),
+                        content: Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              // const SizedBox(height: 10),
+                              CustomFormField(
+                                hintText: "Enter product name",
+                                controller: _name,
+                                validator: (val) {
+                                  if (!nameRegExp.hasMatch(val!))
+                                    return 'Enter valid name';
+                                  return null;
+                                },
+                              ),
+                              TextField(
+                                controller: _dateOfReceipt,
+                                //editing controller of this TextField
+                                decoration: const InputDecoration(
+                                    icon: Icon(Icons.calendar_today),
+                                    //icon of text field
+                                    labelText:
+                                    "Enter product date of receipt" //label text of field
+                                ),
+                                readOnly: true,
+                                //set it true, so that user will not able to edit text
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(2000),
+                                      //DateTime.now() - not to allow to choose before today.
+                                      lastDate: DateTime(2101));
+
+                                  if (pickedDate != null) {
+                                    print(
+                                        pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                    String formattedDate =
+                                    DateFormat('yyyy-MM-dd')
+                                        .format(pickedDate);
+                                    print(
+                                        formattedDate); //formatted date output using intl package =>  2021-03-16
+                                    //you can implement different kind of Date Format here according to your requirement
+
+                                    setState(() {
+                                      _dateOfReceipt.text =
+                                          formattedDate; //set output date to TextField value.
+                                    });
+                                  } else {
+                                    print("Date is not selected");
+                                  }
+                                },
+                              ),
+                              TextField(
+                                controller: _expirationDate,
+                                //editing controller of this TextField
+                                decoration: const InputDecoration(
+                                    icon: Icon(Icons.calendar_today),
+                                    //icon of text field
+                                    labelText:
+                                    "Enter product expiration date" //label text of field
+                                ),
+                                readOnly: true,
+                                //set it true, so that user will not able to edit text
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(2000),
+                                      //DateTime.now() - not to allow to choose before today.
+                                      lastDate: DateTime(2101));
+
+                                  if (pickedDate != null) {
+                                    print(
+                                        pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                    String formattedDate =
+                                    DateFormat('yyyy-MM-dd')
+                                        .format(pickedDate);
+                                    print(
+                                        formattedDate); //formatted date output using intl package =>  2021-03-16
+                                    //you can implement different kind of Date Format here according to your requirement
+
+                                    setState(() {
+                                      _expirationDate.text =
+                                          formattedDate; //set output date to TextField value.
+                                    });
+                                  } else {
+                                    print("Date is not selected");
+                                  }
+                                },
+                              ),
+                              CustomFormField(
+                                hintText: 'Amount',
+                                controller: _amount,
+                                validator: (val) {
+                                  final amountRegExp = RegExp(r'^[0-9]+$');
+
+                                  if (!amountRegExp.hasMatch(val!)) {
+                                    return 'Enter valid Amount';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              CustomFormField(
+                                hintText: 'Price',
+                                controller: _price,
+                                validator: (val) {
+                                  final phoneRegExp = RegExp(r'^[0-9]+$');
+
+                                  if (!phoneRegExp.hasMatch(val!)) {
+                                    return 'Enter valid Price';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text('Enter valid made_of'),
+                                  DropdownButton<String>(
+                                    value: _dropdownValue,
+                                    icon: const Icon(Icons.arrow_downward),
+                                    elevation: 16,
+                                    style:
+                                    const TextStyle(color: Colors.deepPurple),
+                                    underline: Container(
+                                      height: 2,
+                                      color: Colors.deepPurpleAccent,
+                                    ),
+                                    onChanged: (String? value) {
+                                      // This is called when the user selects an item.
+                                      _dropdownValue = value!;
+
+                                      setState(() {});
+                                    },
+                                    items: _madeNumber.map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                  ),
+
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      // textStyle: Theme.of(context).textTheme.labelLarge,
+                                      backgroundColor: Colors.green,
+                                      padding:
+                                      const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                                    ),
+                                    child: const Text('Save changes',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        )),
+                                    onPressed: () {
+                                      var updatedProduct = Product(
+                                          productId: editProductItem.productId,
+                                          name: _name.text,
+                                          dateOfReceipt: _dateOfReceipt.text,
+                                          expirationDate: _expirationDate.text,
+                                          amount: int.parse(_amount.text),
+                                          price: double.parse(_price.text),
+                                          madeOf: int.parse(_dropdownValue),
+                                          ownerId: widget.currentuser.userId);
+
+                                      Processing.updateProduct(updatedProduct);
+                                      _refreshIndicatorKey.currentState?.show();
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      backgroundColor: Colors.redAccent,
+                                      padding:
+                                      const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                                    ),
+                                    child: const Text('Close',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        )),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        )
+                      // actions: <Widget>[
+                      //
+                      // ],
+                    ),
+                  ),
+                ),
+              );
+            }
+        );
+      },
+    );
   }
 }

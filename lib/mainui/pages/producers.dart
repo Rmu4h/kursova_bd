@@ -179,7 +179,23 @@ class _ProducerPageState extends State<ProducerPage> {
                                                             ),
                                                           ],
                                                         ),
-                                                        ),
+                                                        trailing: SizedBox(
+                                                            child:
+                                                                FloatingActionButton.small(
+                                                          onPressed: () =>
+                                                              dialogBuilder(
+                                                                  context),
+                                                          tooltip:
+                                                              'Add new Producer',
+                                                          child: const Icon(
+                                                            Icons.edit,
+                                                            color: Colors.white,
+                                                            size: 20.0,
+                                                          ),
+                                                        )),
+                                                      onTap: () => dialogBuilder(context),
+                                                    ),
+
                                                   ],
                                                 ),
                                               ),
@@ -353,7 +369,11 @@ class _ProducerPageState extends State<ProducerPage> {
                                                           child:
                                                               FloatingActionButton(
                                                             onPressed: () {
-                                                              Navigator.popUntil(context, ModalRoute.withName('/main'));
+                                                              Navigator.popUntil(
+                                                                  context,
+                                                                  ModalRoute
+                                                                      .withName(
+                                                                          '/main'));
                                                             },
                                                             backgroundColor:
                                                                 const Color(
@@ -423,7 +443,7 @@ class _ProducerPageState extends State<ProducerPage> {
     });
   }
 
-  Future<void> _dialogBuilder(BuildContext context) {
+  Future<void> dialogBuilder(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
 
     final TextEditingController _name = TextEditingController();
