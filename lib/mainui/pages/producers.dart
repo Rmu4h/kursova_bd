@@ -535,17 +535,18 @@ class _ProducerPageState extends State<ProducerPage> {
                                     color: Colors.white,
                                   )),
                               onPressed: () {
-                                
-                                Processing.updateProducer(Producer(
-                                        producerId: currprod.producerId,
-                                        name: _name.text,
-                                        description: _description.text,
-                                        location: _location.text,
-                                        contactPhone: _phone.text))
-                                    .then((value) {
-                                  Navigator.of(context).pop();
-                                  refresh();
-                                });
+                                if (_formKey.currentState!.validate()) {
+                                  Processing.updateProducer(Producer(
+                                          producerId: currprod.producerId,
+                                          name: _name.text,
+                                          description: _description.text,
+                                          location: _location.text,
+                                          contactPhone: _phone.text))
+                                      .then((value) {
+                                    Navigator.of(context).pop();
+                                    refresh();
+                                  });
+                                }
                               },
                             ),
                             TextButton(
