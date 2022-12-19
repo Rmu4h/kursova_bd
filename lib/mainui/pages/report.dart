@@ -18,11 +18,12 @@ class _ReportPageState extends State<ReportPage> {
   late final Future myFuture;
   final TextEditingController _dateOfReceipt =
       TextEditingController(text: '2020-11-29');
-  final TextEditingController _expirationDate = TextEditingController(text: '2032-11-29');
+  final TextEditingController _expirationDate =
+      TextEditingController(text: '2032-11-29');
   late var fromDate = DateTime.parse(_dateOfReceipt.text);
   late var toDate = DateTime.parse(_expirationDate.text);
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  GlobalKey<RefreshIndicatorState>();
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -62,8 +63,8 @@ class _ReportPageState extends State<ReportPage> {
                     //editing controller of this TextField
                     decoration: const InputDecoration(
                         icon: Icon(
-                            Icons.calendar_today,
-                            color: Color(0xFF613CEA),
+                          Icons.calendar_today,
+                          color: Color(0xFF613CEA),
                         ),
                         //icon of text field
                         labelText: "From" //label text of field
@@ -89,12 +90,14 @@ class _ReportPageState extends State<ReportPage> {
 
                         setState(() {
                           _dateOfReceipt.text = formattedDate;
-                          fromDate = DateTime.parse(formattedDate);//set output date to TextField value.
+                          fromDate = DateTime.parse(
+                              formattedDate); //set output date to TextField value.
                         });
                       } else {
                         print("Date is not selected");
                       }
                       print('${fromDate} - fromDate');
+                      refresh();
                     },
                   ),
                 ),
@@ -105,8 +108,8 @@ class _ReportPageState extends State<ReportPage> {
                     //editing controller of this TextField
                     decoration: const InputDecoration(
                         icon: Icon(
-                            Icons.calendar_today,
-                            color: Color(0xFF613CEA),
+                          Icons.calendar_today,
+                          color: Color(0xFF613CEA),
                         ),
                         //icon of text field
                         labelText: "To" //label text of field
@@ -132,12 +135,14 @@ class _ReportPageState extends State<ReportPage> {
 
                         setState(() {
                           _expirationDate.text = formattedDate;
-                          toDate = DateTime.parse(formattedDate);//set output date to TextField value.
+                          toDate = DateTime.parse(
+                              formattedDate); //set output date to TextField value.
                         });
                       } else {
                         print("Date is not selected");
                       }
                       print('${toDate} - toDate');
+                      refresh();
                     },
                   ),
                 ),
@@ -148,9 +153,7 @@ class _ReportPageState extends State<ReportPage> {
             ),
             Table(
               border: TableBorder.symmetric(
-                  inside: const BorderSide(width: 2, color: Colors.black)
-              ),
-
+                  inside: const BorderSide(width: 2, color: Colors.black)),
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               children: const [
                 TableRow(
@@ -158,59 +161,58 @@ class _ReportPageState extends State<ReportPage> {
                       color: Color(0xFF6040E5),
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10)
-                      ),
+                          topRight: Radius.circular(10)),
                     ),
                     children: [
-                  Text(
-                    'name',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                      'amount',
-                      textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                      'price',
-                      textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                      'dateOfReceipt',
-                      textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                      'expirationDate',
-                      textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                      'madeOf',
-                      textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ]),
+                      Text(
+                        'name',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'amount',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'price',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'dateOfReceipt',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'expirationDate',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'madeOf',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ]),
               ],
             ),
             FutureBuilder(
@@ -238,8 +240,7 @@ class _ReportPageState extends State<ReportPage> {
                             itemCount: namesProducts.length,
                             itemBuilder: (BuildContext context, int index) {
                               return createTable(namesProducts.length, index);
-                            }
-                        ),
+                            }),
                       );
                     }
                   }
@@ -252,7 +253,8 @@ class _ReportPageState extends State<ReportPage> {
   }
 
   downloadList() {
-    return Processing.getProducts(widget.currentuser.userId).then((value) {
+    return Processing.getProductsByDate(
+            widget.currentuser.userId, DateFormat('yyyy-MM-dd').format(fromDate), DateFormat('yyyy-MM-dd').format(toDate)).then((value) {
       namesProducts = value;
 
       return namesProducts;
@@ -260,11 +262,12 @@ class _ReportPageState extends State<ReportPage> {
   }
 
   Future refresh() async {
-    final products = await Processing.getProducts(widget.currentuser.userId).then((value) {
+    final products = await Processing.getProductsByDate(
+            widget.currentuser.userId, DateFormat('yyyy-MM-dd').format(fromDate), DateFormat('yyyy-MM-dd').format(toDate))
+        .then((value) {
       namesProducts = value;
-
       return namesProducts;
-    });
+    }).onError((error, stackTrace) => namesProducts = <Product>[]);
 
     setState(() {
       namesProducts = products;
@@ -278,43 +281,43 @@ class _ReportPageState extends State<ReportPage> {
     // for (int i = 0; i < lengthTable; i++) {
     //   print('${i} - i var');
 
-      var itemFromDate = DateTime.parse(namesProducts[index].dateOfReceipt);
-      var itemToDate = DateTime.parse(namesProducts[index].expirationDate);
+    // var itemFromDate = DateTime.parse(namesProducts[index].dateOfReceipt);
+    // var itemToDate = DateTime.parse(namesProducts[index].expirationDate);
 
-      if(itemFromDate.isAfter(fromDate) && itemToDate.isBefore(toDate)){
-        print('${index} - index var');
+    //if (itemFromDate.isAfter(fromDate) && itemToDate.isBefore(toDate)) {
+      print('${index} - index var');
 
-        rows.add(TableRow(children: [
-          Text(
-            namesProducts[index].name,
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            '${namesProducts[index].amount}',
-            textAlign: TextAlign.center,
-          ),
-          Text(
-              '${namesProducts[index].price}',
-              textAlign: TextAlign.center,
-          ),
-          Text(
-              '${namesProducts[index].dateOfReceipt}',
-              textAlign: TextAlign.center,
-          ),
-          Text(
-              '${namesProducts[index].expirationDate}',
-              textAlign: TextAlign.center,
-          ),
-          Text(
-              '${namesProducts[index].madeOf}',
-              textAlign: TextAlign.center,
-          ),
-        ]));
-      }
+      rows.add(TableRow(children: [
+        Text(
+          namesProducts[index].name,
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          '${namesProducts[index].amount}',
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          '${namesProducts[index].price}',
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          '${namesProducts[index].dateOfReceipt}',
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          '${namesProducts[index].expirationDate}',
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          '${namesProducts[index].madeOf}',
+          textAlign: TextAlign.center,
+        ),
+      ]));
+    //}
     // }
     return Table(
-        border: TableBorder.all(),
-        children: rows,
+      border: TableBorder.all(),
+      children: rows,
     );
   }
 }

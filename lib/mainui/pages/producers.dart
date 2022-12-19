@@ -117,85 +117,87 @@ class _ProducerPageState extends State<ProducerPage> {
                                                       WrapCrossAlignment.center,
                                                   children: [
                                                     ListTile(
-                                                        leading: Image.asset(
-                                                          'assets/images/flag.svg.png',
-                                                          fit: BoxFit.cover,
-                                                          width: 60,
-                                                          height: 40,
-                                                        ),
-                                                        title: Column(
-                                                          children: [
-                                                            Text(
-                                                              '${namesProducer[index].name}',
-                                                              // замінив з snapshot.data
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 20,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
+                                                      leading: Image.asset(
+                                                        'assets/images/flag.svg.png',
+                                                        fit: BoxFit.cover,
+                                                        width: 60,
+                                                        height: 40,
+                                                      ),
+                                                      title: Column(
+                                                        children: [
+                                                          Text(
+                                                            '${namesProducer[index].name}',
+                                                            // замінив з snapshot.data
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 20,
+                                                              color:
+                                                                  Colors.white,
                                                             ),
-                                                            Text(
-                                                              'Description: ${namesProducer[index].description}',
-                                                              // замінив з snapshot.data
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              'Contact phone: ${namesProducer[index].contactPhone}',
-                                                              // замінив з snapshot.data
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              'Location: ${namesProducer[index].location}',
-                                                              // замінив з snapshot.data
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        trailing: SizedBox(
-                                                            child:
-                                                                FloatingActionButton.small(
-                                                          onPressed: () =>
-                                                              dialogBuilder(
-                                                                  context),
-                                                          tooltip:
-                                                              'Add new Producer',
-                                                          child: const Icon(
-                                                            Icons.edit,
-                                                            color: Colors.white,
-                                                            size: 20.0,
                                                           ),
-                                                        )),
-                                                      onTap: () => dialogBuilder(context),
+                                                          Text(
+                                                            'Description: ${namesProducer[index].description}',
+                                                            // замінив з snapshot.data
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Contact phone: ${namesProducer[index].contactPhone}',
+                                                            // замінив з snapshot.data
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Location: ${namesProducer[index].location}',
+                                                            // замінив з snapshot.data
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      trailing: SizedBox(
+                                                          child:
+                                                              FloatingActionButton
+                                                                  .small(
+                                                        onPressed: () =>
+                                                            dialogBuilder(
+                                                                context,
+                                                                namesProducer[
+                                                                    index]),
+                                                        tooltip:
+                                                            'Add new Producer',
+                                                        child: const Icon(
+                                                          Icons.edit,
+                                                          color: Colors.white,
+                                                          size: 20.0,
+                                                        ),
+                                                      )),
+                                                      onTap: () =>
+                                                          dialogBuilder(
+                                                              context,
+                                                              namesProducer[
+                                                                  index]),
                                                     ),
-
                                                   ],
                                                 ),
                                               ),
@@ -330,7 +332,7 @@ class _ProducerPageState extends State<ProducerPage> {
                                           return null;
                                         },
                                       ),
-                                      SizedBox(height: 15),
+                                      const SizedBox(height: 15),
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor:
@@ -443,13 +445,17 @@ class _ProducerPageState extends State<ProducerPage> {
     });
   }
 
-  Future<void> dialogBuilder(BuildContext context) {
+  Future<void> dialogBuilder(BuildContext context, Producer currprod) {
     final _formKey = GlobalKey<FormState>();
 
-    final TextEditingController _name = TextEditingController();
-    final TextEditingController _description = TextEditingController();
-    final TextEditingController _location = TextEditingController();
-    final TextEditingController _phone = TextEditingController();
+    final TextEditingController _name =
+        TextEditingController(text: currprod.name);
+    final TextEditingController _description =
+        TextEditingController(text: currprod.description);
+    final TextEditingController _location =
+        TextEditingController(text: currprod.location);
+    final TextEditingController _phone =
+        TextEditingController(text: currprod.contactPhone);
 
     return showDialog<void>(
       context: context,
@@ -471,7 +477,7 @@ class _ProducerPageState extends State<ProducerPage> {
                       children: [
                         // const SizedBox(height: 10),
                         CustomFormField(
-                          hintText: "Enter product name",
+                          hintText: "Enter new producer name",
                           controller: _name,
                           validator: (val) {
                             if (!nameRegExp.hasMatch(val!))
@@ -529,7 +535,17 @@ class _ProducerPageState extends State<ProducerPage> {
                                     color: Colors.white,
                                   )),
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                
+                                Processing.updateProducer(Producer(
+                                        producerId: currprod.producerId,
+                                        name: _name.text,
+                                        description: _description.text,
+                                        location: _location.text,
+                                        contactPhone: _phone.text))
+                                    .then((value) {
+                                  Navigator.of(context).pop();
+                                  refresh();
+                                });
                               },
                             ),
                             TextButton(

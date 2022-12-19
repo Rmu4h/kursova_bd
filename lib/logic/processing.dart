@@ -11,7 +11,7 @@ class Processing {
   //   map['userid'] = ownerId.toString();
   //
   //   final response = await http.post(
-  //       Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
+  //       Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
   //       body: map); //instead of "localhost" input ur local IPv4
   //
   //   if (200 == response.statusCode) {
@@ -41,7 +41,7 @@ class Processing {
       map['action'] = 'GET_ITEMS';
       map['userid'] = userid.toString();
       final response = await http.post(
-          Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
+          Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         print(response.body);
@@ -69,7 +69,7 @@ class Processing {
       var map = product.toJson();
       map['action'] = 'ADD_ITEM';
       final response = await http.post(
-          Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
+          Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -90,7 +90,7 @@ class Processing {
       map['date_to'] = date_to;
       map['date_from'] = date_from;
       final response = await http.post(
-          Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
+          Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         List<Product> list = parseResponse(response.body);
@@ -110,7 +110,7 @@ class Processing {
       var map = product.toJson();
       map['action'] = 'UPDATE_ITM';
       final response = await http.post(
-          Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
+          Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -128,7 +128,7 @@ class Processing {
       map['action'] = 'DELETE_ITM';
       map['product_id'] = productId.toString();
       final response = await http.post(
-          Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
+          Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -147,7 +147,7 @@ class Processing {
       map['action'] = 'DELETE_ITM';
       map['product_id'] = productId.toString();
       final response = await http.post(
-          Uri.http('192.168.1.104', '/dbkursach/itemactions.php'),
+          Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -166,7 +166,7 @@ class Processing {
       map['email'] = email;
       map['password'] = password;
       final response = await http.post(
-          Uri.http('192.168.1.104', '/dbkursach/useraction.php'),
+          Uri.http('192.168.0.103', '/dbkursach/useraction.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         if (response.body == 'error') {
@@ -189,7 +189,7 @@ class Processing {
       map['action'] = 'SIGN_UP';
 
       final response = await http.post(
-          Uri.http('192.168.1.104', '/dbkursach/useraction.php'),
+          Uri.http('192.168.0.103', '/dbkursach/useraction.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         print('200');
@@ -209,7 +209,7 @@ class Processing {
       map['action'] = 'UPDATE_USER';
 
       final response = await http.post(
-          Uri.http('192.168.1.104', '/dbkursach/useraction.php'),
+          Uri.http('192.168.0.103', '/dbkursach/useraction.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -231,7 +231,7 @@ class Processing {
       var map = Map<String, dynamic>();
       map['action'] = 'GET_PRODUCERS';
       final response = await http.post(
-          Uri.http('192.168.1.104', '/dbkursach/producersactions.php'),
+          Uri.http('192.168.0.103', '/dbkursach/producersactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         List<Producer> list = parseProducers(response.body);
@@ -247,13 +247,29 @@ class Processing {
     }
   }
 
+  static Future<String> updateProducer(Producer producer) async {
+    try {
+      var map = producer.toJson();
+      map['action'] = 'UPDATE_ITM';
+      final response = await http.post(
+          Uri.http('192.168.0.103', '/dbkursach/producersactions.php'),
+          body: map); //instead of "localhost" input ur local IPv4
+      if (200 == response.statusCode) {
+        return response.body;
+      } else {
+        return 'error';
+      }
+    } catch (e) {
+      return 'error';
+    }
+  }
 
     static Future<String> addProducer(Producer producer) async {
     try {
       var map = producer.toJson();
       map['action'] = 'ADD_PRODUCER';
       final response = await http.post(
-          Uri.http('192.168.1.104', '/dbkursach/producersactions.php'),
+          Uri.http('192.168.0.103', '/dbkursach/producersactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -271,7 +287,7 @@ class Processing {
       map['action'] = 'DEL_PRODUCER';
       map['producer_id'] = producerId.toString();
       final response = await http.post(
-          Uri.http('192.168.1.104', '/dbkursach/producersactions.php'),
+          Uri.http('192.168.0.103', '/dbkursach/producersactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
