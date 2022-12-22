@@ -85,8 +85,9 @@ class _LoginPageState extends State<LoginPage> {
                         final emailRegExp =
                             RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
-                        if (!emailRegExp.hasMatch(val!))
+                        if (!emailRegExp.hasMatch(val!)) {
                           return 'Enter valid email';
+                        }
                         return null;
                       },
                     ),
@@ -98,8 +99,9 @@ class _LoginPageState extends State<LoginPage> {
                         final passwordRegExp = RegExp(
                             r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
 
-                        if (!passwordRegExp.hasMatch(val!))
+                        if (!passwordRegExp.hasMatch(val!)) {
                           return 'Enter valid password';
+                        }
                         return null;
                       },
                     ),
@@ -153,11 +155,6 @@ class _LoginPageState extends State<LoginPage> {
                               );
                             },
                           );
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (_) => const MainPage(),
-                          //   ),
-                          // );
                         }
                       },
                       child: const Text(

@@ -16,7 +16,7 @@ class _ProducerPageState extends State<ProducerPage> {
   late final Future myFutureProducerData;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  final _formKeyshowModal = GlobalKey<FormState>();
+  final _formKeyShowModal = GlobalKey<FormState>();
   final nameRegExp = RegExp(r'^(?=.*?[a-z]).{3,}$');
   final locationRegExp = RegExp(r'^(?=.*?[a-z]).{3,}$');
   final descriptionRegExp = RegExp(r'^(?=.*?[a-z]).{3,70}$');
@@ -45,11 +45,7 @@ class _ProducerPageState extends State<ProducerPage> {
                           color: Color(0xFFA2A6B1),
                         ),
                         onPressed: () {
-                          print('sent');
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const LoginPage()));
+
                           Navigator.popAndPushNamed(context, "/");
                         },
                       ),
@@ -79,7 +75,6 @@ class _ProducerPageState extends State<ProducerPage> {
                                     itemCount: namesProducer.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      print(namesProducer[index].name);
                                       return (!namesProducer[index]
                                               .name
                                               .isEmpty)
@@ -89,11 +84,8 @@ class _ProducerPageState extends State<ProducerPage> {
                                               ),
                                               key: ValueKey(
                                                   namesProducer[index]),
-                                              // замінив з snapshot.data
                                               onDismissed:
                                                   (DismissDirection direction) {
-                                                print(
-                                                    namesProducer[index].name);
                                                 Processing.deleteProducer(
                                                     namesProducer[index]
                                                         .producerId); // замінив з snapshot.data
@@ -228,12 +220,12 @@ class _ProducerPageState extends State<ProducerPage> {
               bottom: 30.0,
               child: FloatingActionButton(
                 onPressed: () {
-                  final TextEditingController _name = TextEditingController();
-                  final TextEditingController _description =
+                  final TextEditingController name = TextEditingController();
+                  final TextEditingController description =
                       TextEditingController();
-                  final TextEditingController _location =
+                  final TextEditingController location =
                       TextEditingController();
-                  final TextEditingController _contactPhone =
+                  final TextEditingController contactPhone =
                       TextEditingController();
 
                   showModalBottomSheet<void>(
@@ -244,12 +236,9 @@ class _ProducerPageState extends State<ProducerPage> {
                             topLeft: Radius.circular(35),
                             topRight: Radius.circular(35))),
                     builder: (_) {
-                      // String _dropdownValue = _madeNumber.first;
-                      print('new in showModalBottomSheet');
 
                       return StatefulBuilder(builder:
                           (BuildContext context, StateSetter setState) {
-                        print('new in StatefulBuilder window');
 
                         return Container(
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 60),
@@ -271,7 +260,7 @@ class _ProducerPageState extends State<ProducerPage> {
                                   ],
                                 ),
                                 Form(
-                                  key: _formKeyshowModal,
+                                  key: _formKeyShowModal,
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -285,43 +274,45 @@ class _ProducerPageState extends State<ProducerPage> {
                                           fontSize: 20,
                                         ),
                                       ),
-                                      SizedBox(height: 15),
+                                      const SizedBox(height: 15),
                                       CustomFormField(
                                         hintText: "Enter product name",
-                                        controller: _name,
+                                        controller: name,
                                         validator: (val) {
-                                          if (!nameRegExp.hasMatch(val!))
+                                          if (!nameRegExp.hasMatch(val!)) {
                                             return 'Enter valid name';
+                                          }
                                           return null;
                                         },
                                       ),
-                                      SizedBox(height: 15),
-                                      // const SizedBox(height: 10),
+                                      const SizedBox(height: 15),
                                       CustomFormField(
                                         hintText: "Enter location",
-                                        controller: _location,
+                                        controller: location,
                                         validator: (val) {
-                                          if (!locationRegExp.hasMatch(val!))
+                                          if (!locationRegExp.hasMatch(val!)) {
                                             return 'Description can contain up to 70 characters';
+                                          }
                                           return null;
                                         },
                                       ),
-                                      SizedBox(height: 15),
+                                      const SizedBox(height: 15),
                                       // const SizedBox(height: 10),
                                       CustomFormField(
                                         hintText: "Enter new description",
-                                        controller: _description,
+                                        controller: description,
                                         validator: (val) {
-                                          if (!descriptionRegExp.hasMatch(val!))
+                                          if (!descriptionRegExp.hasMatch(val!)) {
                                             return 'Description can contain up to 70 characters';
+                                          }
                                           return null;
                                         },
                                       ),
-                                      SizedBox(height: 15),
+                                      const SizedBox(height: 15),
                                       // const SizedBox(height: 10,),
                                       CustomFormField(
                                         hintText: 'Phone',
-                                        controller: _contactPhone,
+                                        controller: contactPhone,
                                         validator: (val) {
                                           final phoneRegExp = RegExp(
                                               r'(^(?:[+0]9)?[0-9]{10,12}$)');
@@ -344,14 +335,14 @@ class _ProducerPageState extends State<ProducerPage> {
                                         ),
                                         child: const Text('SAVE CHANGES'),
                                         onPressed: () {
-                                          if (_formKeyshowModal.currentState!
+                                          if (_formKeyShowModal.currentState!
                                               .validate()) {
                                             var newItem = Producer(
                                               producerId: 0,
-                                              name: _name.text,
-                                              description: _description.text,
-                                              location: _location.text,
-                                              contactPhone: _contactPhone.text,
+                                              name: name.text,
+                                              description: description.text,
+                                              location: location.text,
+                                              contactPhone: contactPhone.text,
                                             );
                                             Processing.addProducer(newItem)
                                                 .then((value) {
@@ -360,7 +351,7 @@ class _ProducerPageState extends State<ProducerPage> {
                                                   context: context,
                                                   builder: (_) => AlertDialog(
                                                     title: const Text(
-                                                        'Successfuly added!'),
+                                                        'Successfully added!'),
                                                     content: const Text(
                                                         'New producer was created'),
                                                     actions: <Widget>[
@@ -445,17 +436,17 @@ class _ProducerPageState extends State<ProducerPage> {
     });
   }
 
-  Future<void> dialogBuilder(BuildContext context, Producer currprod) {
-    final _formKey = GlobalKey<FormState>();
+  Future<void> dialogBuilder(BuildContext context, Producer currentProduct) {
+    final formKey = GlobalKey<FormState>();
 
-    final TextEditingController _name =
-        TextEditingController(text: currprod.name);
-    final TextEditingController _description =
-        TextEditingController(text: currprod.description);
-    final TextEditingController _location =
-        TextEditingController(text: currprod.location);
-    final TextEditingController _phone =
-        TextEditingController(text: currprod.contactPhone);
+    final TextEditingController name =
+        TextEditingController(text: currentProduct.name);
+    final TextEditingController description =
+        TextEditingController(text: currentProduct.description);
+    final TextEditingController location =
+        TextEditingController(text: currentProduct.location);
+    final TextEditingController phone =
+        TextEditingController(text: currentProduct.contactPhone);
 
     return showDialog<void>(
       context: context,
@@ -471,44 +462,47 @@ class _ProducerPageState extends State<ProducerPage> {
                   // insetPadding: EdgeInsets.symmetric(vertical: height),
                   title: const Text('Change producer'),
                   content: Form(
-                    key: _formKey,
+                    key: formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         // const SizedBox(height: 10),
                         CustomFormField(
                           hintText: "Enter new producer name",
-                          controller: _name,
+                          controller: name,
                           validator: (val) {
-                            if (!nameRegExp.hasMatch(val!))
+                            if (!nameRegExp.hasMatch(val!)) {
                               return 'Enter valid name';
+                            }
                             return null;
                           },
                         ),
                         // const SizedBox(height: 10),
                         CustomFormField(
                           hintText: "Enter location",
-                          controller: _location,
+                          controller: location,
                           validator: (val) {
-                            if (!locationRegExp.hasMatch(val!))
+                            if (!locationRegExp.hasMatch(val!)) {
                               return 'Description can contain up to 70 characters';
+                            }
                             return null;
                           },
                         ),
                         // const SizedBox(height: 10),
                         CustomFormField(
                           hintText: "Enter new description",
-                          controller: _description,
+                          controller: description,
                           validator: (val) {
-                            if (!descriptionRegExp.hasMatch(val!))
+                            if (!descriptionRegExp.hasMatch(val!)) {
                               return 'Description can contain up to 70 characters';
+                            }
                             return null;
                           },
                         ),
                         // const SizedBox(height: 10,),
                         CustomFormField(
                           hintText: 'Phone',
-                          controller: _phone,
+                          controller: phone,
                           validator: (val) {
                             final phoneRegExp =
                                 RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
@@ -535,13 +529,13 @@ class _ProducerPageState extends State<ProducerPage> {
                                     color: Colors.white,
                                   )),
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {
+                                if (formKey.currentState!.validate()) {
                                   Processing.updateProducer(Producer(
-                                          producerId: currprod.producerId,
-                                          name: _name.text,
-                                          description: _description.text,
-                                          location: _location.text,
-                                          contactPhone: _phone.text))
+                                          producerId: currentProduct.producerId,
+                                          name: name.text,
+                                          description: description.text,
+                                          location: location.text,
+                                          contactPhone: phone.text))
                                       .then((value) {
                                     Navigator.of(context).pop();
                                     refresh();

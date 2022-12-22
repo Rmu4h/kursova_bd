@@ -4,36 +4,6 @@ import 'dart:convert';
 import 'classes.dart';
 
 class Processing {
-  // static Future<List<Product>> getAllProducts(int ownerId) async {
-  //   //var map = <String, dynamic>{};
-  //   var map = Map<String, dynamic>();
-  //   map['action'] = 'GET_ITEMS';
-  //   map['userid'] = ownerId.toString();
-  //
-  //   final response = await http.post(
-  //       Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
-  //       body: map); //instead of "localhost" input ur local IPv4
-  //
-  //   if (200 == response.statusCode) {
-  //     print('before list');
-  //     List<Product> list = parseResponse(response.body);
-  //     print('after list');
-  //     return list;
-  //   } else {
-  //     print('fafafafaf2');
-  //
-  //     return <Product>[];
-  //   }
-  // }
-  //
-  // static Future getProducts(int ownerId) async {
-  //   try {
-  //     getAllProducts(ownerId);
-  //   } catch (e) {
-  //     print('eeeerooooree - ${e}');
-  //     return <Product>[];
-  //   }
-  // }
 
   static Future<List<Product>> getProducts(int userid) async {
     try {
@@ -41,19 +11,15 @@ class Processing {
       map['action'] = 'GET_ITEMS';
       map['userid'] = userid.toString();
       final response = await http.post(
-          Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
-        print(response.body);
         List<Product> list = parseResponse(response.body);
-        print('worked');
         return list;
       } else {
-        //return <Product>[];
         return Future.error('Connection Error');
       }
     } catch (e) {
-      print('Помилка бля - ${e}');
       return Future.error('Exeption');
       //return <Product>[];
     }
@@ -69,7 +35,7 @@ class Processing {
       var map = product.toJson();
       map['action'] = 'ADD_ITEM';
       final response = await http.post(
-          Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -90,17 +56,15 @@ class Processing {
       map['date_to'] = date_to;
       map['date_from'] = date_from;
       final response = await http.post(
-          Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         List<Product> list = parseResponse(response.body);
         return list;
       } else {
-        //return <Product>[];
         return Future.error('Connection Error');
       }
     } catch (e) {
-      //return <Product>[];
       return Future.error('Exeption');
     }
   }
@@ -110,7 +74,7 @@ class Processing {
       var map = product.toJson();
       map['action'] = 'UPDATE_ITM';
       final response = await http.post(
-          Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -128,7 +92,7 @@ class Processing {
       map['action'] = 'DELETE_ITM';
       map['product_id'] = productId.toString();
       final response = await http.post(
-          Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -147,7 +111,7 @@ class Processing {
       map['action'] = 'DELETE_ITM';
       map['product_id'] = productId.toString();
       final response = await http.post(
-          Uri.http('192.168.0.103', '/dbkursach/itemactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/itemactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -166,7 +130,7 @@ class Processing {
       map['email'] = email;
       map['password'] = password;
       final response = await http.post(
-          Uri.http('192.168.0.103', '/dbkursach/useraction.php'),
+          Uri.http('169.254.123.102', '/dbkursach/useraction.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         if (response.body == 'error') {
@@ -178,7 +142,7 @@ class Processing {
         return Future.error("Connection error");
       }
     } catch (e) {
-      return Future.error("Exeption error");
+      return Future.error("Exception error");
     }
   }
 
@@ -189,10 +153,9 @@ class Processing {
       map['action'] = 'SIGN_UP';
 
       final response = await http.post(
-          Uri.http('192.168.0.103', '/dbkursach/useraction.php'),
+          Uri.http('169.254.123.102', '/dbkursach/useraction.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
-        print('200');
         return response.body;
       } else {
         return 'Connection error';
@@ -209,7 +172,7 @@ class Processing {
       map['action'] = 'UPDATE_USER';
 
       final response = await http.post(
-          Uri.http('192.168.0.103', '/dbkursach/useraction.php'),
+          Uri.http('169.254.123.102', '/dbkursach/useraction.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -231,19 +194,16 @@ class Processing {
       var map = Map<String, dynamic>();
       map['action'] = 'GET_PRODUCERS';
       final response = await http.post(
-          Uri.http('192.168.0.103', '/dbkursach/producersactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/producersactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         List<Producer> list = parseProducers(response.body);
         return list;
       } else {
-        //return <Producer>[];
         return Future.error('Connection Error');
       }
     } catch (e) {
-      print('Помилка бля - ${e}');
       return Future.error('Exeption');
-      //return <Producer>[];
     }
   }
 
@@ -252,7 +212,7 @@ class Processing {
       var map = producer.toJson();
       map['action'] = 'UPDATE_ITM';
       final response = await http.post(
-          Uri.http('192.168.0.103', '/dbkursach/producersactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/producersactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -269,7 +229,7 @@ class Processing {
       var map = producer.toJson();
       map['action'] = 'ADD_PRODUCER';
       final response = await http.post(
-          Uri.http('192.168.0.103', '/dbkursach/producersactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/producersactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;
@@ -287,7 +247,7 @@ class Processing {
       map['action'] = 'DEL_PRODUCER';
       map['producer_id'] = producerId.toString();
       final response = await http.post(
-          Uri.http('192.168.0.103', '/dbkursach/producersactions.php'),
+          Uri.http('169.254.123.102', '/dbkursach/producersactions.php'),
           body: map); //instead of "localhost" input ur local IPv4
       if (200 == response.statusCode) {
         return response.body;

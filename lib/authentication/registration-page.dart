@@ -146,9 +146,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     hintText: 'Repeat password',
 
                     validator: (val) {
-                      // if ((!passwordRegExp.hasMatch(val!))) {
-                      //   return 'Enter valid password';
-                      // }
                       if(val != _pass.text) {
                         return 'Not Match';
                       }
@@ -167,11 +164,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print('${_name.text} - _name is done');
-                        print('${_email.text} - _email is done');
-                        print('${_phone.text} - _phone.text is done');
-                        print('${_docNo.text} - _docNo.text is done');
-                        print('${_pass.text} - _pass.text is done');
 
                         var newUser = User(
                             userId: 0,
@@ -183,8 +175,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             email: _email.text,
                             password: _pass.text,
                         );
-
-                        print('${newUser} - newUser already create');
 
                         Processing.registerUser(newUser).then((value) {
                           if(value == 'success'){
@@ -279,9 +269,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           }
                         }
                         );
-                        print('${newUser} - registerUser func done');
-
-
                       }
                     },
                     child: const Text(

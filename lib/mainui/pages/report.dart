@@ -96,7 +96,6 @@ class _ReportPageState extends State<ReportPage> {
                       } else {
                         print("Date is not selected");
                       }
-                      print('${fromDate} - fromDate');
                       refresh();
                     },
                   ),
@@ -141,7 +140,6 @@ class _ReportPageState extends State<ReportPage> {
                       } else {
                         print("Date is not selected");
                       }
-                      print('${toDate} - toDate');
                       refresh();
                     },
                   ),
@@ -229,7 +227,6 @@ class _ReportPageState extends State<ReportPage> {
                       return const Text('Error');
                     }
                     if (snapshot.hasData && snapshot.data.length > 0) {
-                      print(namesProducts.length);
 
                       return RefreshIndicator(
                         key: _refreshIndicatorKey,
@@ -272,20 +269,15 @@ class _ReportPageState extends State<ReportPage> {
     setState(() {
       namesProducts = products;
     });
-    // return Future<void>.delayed(const Duration(seconds: 2));
   }
 
   Widget createTable(lengthTable, index) {
     List<TableRow> rows = [];
-    print('${lengthTable} - lengthTable var');
-    // for (int i = 0; i < lengthTable; i++) {
-    //   print('${i} - i var');
 
     // var itemFromDate = DateTime.parse(namesProducts[index].dateOfReceipt);
     // var itemToDate = DateTime.parse(namesProducts[index].expirationDate);
 
     //if (itemFromDate.isAfter(fromDate) && itemToDate.isBefore(toDate)) {
-      print('${index} - index var');
 
       rows.add(TableRow(children: [
         Text(
@@ -314,7 +306,6 @@ class _ReportPageState extends State<ReportPage> {
         ),
       ]));
     //}
-    // }
     return Table(
       border: TableBorder.all(),
       children: rows,

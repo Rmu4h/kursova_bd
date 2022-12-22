@@ -27,24 +27,23 @@ class _ProductPageState extends State<ProductPage> {
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  static const List<String> _madeNumber = <String>['1', '2', '3', '4'];
-  late String _dropdownValue;
+
+  // static const List<String> _madeNumber = <String>['1', '2', '3', '4'];
+  // late String _dropdownValue;
 
   @override
   void initState() {
-    _dropdownValue = _madeNumber.first;
+    // _dropdownValue = _madeNumber.first;
 
     super.initState();
 
     myFuture = downloadList();
     myFutureProducersList = downloadProducers();
-    // namesProducts = namesProducts
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // resizeToAvoidBottomInset: true,
         body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Stack(
@@ -103,8 +102,6 @@ class _ProductPageState extends State<ProductPage> {
                     FutureBuilder(
                         future: myFuture, //це у нас _initPhotosData
                         builder: (context, AsyncSnapshot<dynamic> snapshot) {
-                          print(snapshot.connectionState);
-
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return const SpinKitThreeBounce(
@@ -117,9 +114,6 @@ class _ProductPageState extends State<ProductPage> {
                               return const Text('Error');
                             }
                             if (snapshot.hasData && snapshot.data.length > 0) {
-                              // print(namesProducts.length);
-                              // lengthList = namesProducts.length;
-
                               return Flexible(
                                 flex: 2,
                                 fit: FlexFit.tight,
@@ -132,7 +126,6 @@ class _ProductPageState extends State<ProductPage> {
                                         // замінив з snapshot.data
                                         itemBuilder:
                                             (BuildContext context, int index) {
-                                          // print(namesProducts[index].name);
                                           return namesProducts[index]
                                                   .name
                                                   .contains(searchString)
@@ -142,10 +135,8 @@ class _ProductPageState extends State<ProductPage> {
                                                   ),
                                                   key: ValueKey(
                                                       namesProducts[index]),
-                                                  // замінив з snapshot.data
                                                   onDismissed: (DismissDirection
                                                       direction) {
-                                                    print(snapshot.data[index]);
                                                     Processing.deleteProduct(
                                                         namesProducts[index]
                                                             .productId); // замінив з snapshot.data
@@ -156,7 +147,6 @@ class _ProductPageState extends State<ProductPage> {
                                                     });
                                                   },
                                                   child: Container(
-                                                      // height: 30,
                                                       padding:
                                                           const EdgeInsets.all(
                                                               10.0),
@@ -199,7 +189,6 @@ class _ProductPageState extends State<ProductPage> {
                                                                 ),
                                                                 Text(
                                                                   '${namesProducts[index].amount} - Items',
-                                                                  // замінив з snapshot.data
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
@@ -215,7 +204,6 @@ class _ProductPageState extends State<ProductPage> {
                                                             ),
                                                             subtitle: Text(
                                                               '\$${namesProducts[index].price}',
-                                                              // замінив з snapshot.data
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -309,9 +297,7 @@ class _ProductPageState extends State<ProductPage> {
                                         separatorBuilder:
                                             (BuildContext context, int index) {
                                           return const Divider(
-                                            // height: 1,
                                             thickness: 1,
-                                            // indent: 20,
                                             endIndent: 0,
                                             color: Colors.black,
                                           );
@@ -331,23 +317,18 @@ class _ProductPageState extends State<ProductPage> {
                   bottom: 30.0,
                   child: FloatingActionButton(
                     onPressed: () {
-                      final TextEditingController _name =
+                      final TextEditingController name =
                           TextEditingController();
-                      final TextEditingController _dateOfReceipt =
+                      final TextEditingController dateOfReceipt =
                           TextEditingController(text: '2022-11-29');
-                      final TextEditingController _expirationDate =
+                      final TextEditingController expirationDate =
                           TextEditingController();
-                      final TextEditingController _amount =
+                      final TextEditingController amount =
                           TextEditingController();
-                      final TextEditingController _price =
+                      final TextEditingController price =
                           TextEditingController();
-                      final TextEditingController _made_of =
-                          TextEditingController(text: '');
-                      final TextEditingController _ownerId =
-                          TextEditingController();
-                      TextEditingController dateinput = TextEditingController();
-                      var dropProducerNamesAdd;
-                      var dropProducerIdAdd;
+                      late Producer dropProducerNamesAdd;
+                      late int dropProducerIdAdd;
 
                       showModalBottomSheet<void>(
                         context: context,
@@ -357,13 +338,8 @@ class _ProductPageState extends State<ProductPage> {
                                 topLeft: Radius.circular(35),
                                 topRight: Radius.circular(35))),
                         builder: (_) {
-                          // String _dropdownValue = _madeNumber.first;
-                          print('new in showModalBottomSheet');
-
                           return StatefulBuilder(builder:
                               (BuildContext context, StateSetter setState) {
-                            print('new in StatefulBuilder window');
-
                             return Container(
                               padding: const EdgeInsets.fromLTRB(20, 0, 20, 60),
                               height: MediaQuery.of(context).size.height * 0.9,
@@ -390,35 +366,32 @@ class _ProductPageState extends State<ProductPage> {
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
-
-                                        // crossAxisAlignment: CrossAxisAlignment.,
                                         children: <Widget>[
                                           const Text(
                                             'Add new product',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              // height: 5,
                                               fontSize: 20,
                                             ),
                                           ),
                                           const SizedBox(height: 20),
                                           CustomFormField(
                                             hintText: "Enter product name",
-                                            controller: _name,
+                                            controller: name,
                                             validator: (val) {
-                                              if (!nameRegExp.hasMatch(val!))
+                                              if (!nameRegExp.hasMatch(val!)) {
                                                 return 'Enter valid name';
+                                              }
                                               return null;
                                             },
                                           ),
                                           const SizedBox(height: 10),
                                           TextField(
-                                            controller: _dateOfReceipt,
+                                            controller: dateOfReceipt,
                                             //editing controller of this TextField
                                             decoration: const InputDecoration(
                                                 icon:
                                                     Icon(Icons.calendar_today),
-                                                //icon of text field
                                                 labelText:
                                                     "Enter product date of receipt" //label text of field
                                                 ),
@@ -445,7 +418,7 @@ class _ProductPageState extends State<ProductPage> {
                                                 //you can implement different kind of Date Format here according to your requirement
 
                                                 setState(() {
-                                                  _dateOfReceipt.text =
+                                                  dateOfReceipt.text =
                                                       formattedDate; //set output date to TextField value.
                                                 });
                                               } else {
@@ -455,7 +428,7 @@ class _ProductPageState extends State<ProductPage> {
                                           ),
                                           const SizedBox(height: 10),
                                           TextField(
-                                            controller: _expirationDate,
+                                            controller: expirationDate,
                                             //editing controller of this TextField
                                             decoration: const InputDecoration(
                                                 icon:
@@ -487,7 +460,7 @@ class _ProductPageState extends State<ProductPage> {
                                                 //you can implement different kind of Date Format here according to your requirement
 
                                                 setState(() {
-                                                  _expirationDate.text =
+                                                  expirationDate.text =
                                                       formattedDate; //set output date to TextField value.
                                                 });
                                               } else {
@@ -498,7 +471,7 @@ class _ProductPageState extends State<ProductPage> {
                                           const SizedBox(height: 10),
                                           CustomFormField(
                                             hintText: 'Amount',
-                                            controller: _amount,
+                                            controller: amount,
                                             validator: (val) {
                                               final amountRegExp =
                                                   RegExp(r'^[0-9]+$');
@@ -513,7 +486,7 @@ class _ProductPageState extends State<ProductPage> {
                                           const SizedBox(height: 10),
                                           CustomFormField(
                                             hintText: 'Price',
-                                            controller: _price,
+                                            controller: price,
                                             validator: (val) {
                                               final phoneRegExp =
                                                   RegExp(r'^[0-9]+$');
@@ -602,7 +575,7 @@ class _ProductPageState extends State<ProductPage> {
                                                                   );
                                                                 }),
                                                               )
-                                                            : Text('emp');
+                                                            : const Text('emp');
                                                       }
                                                     }
                                                     return const Text(
@@ -627,15 +600,15 @@ class _ProductPageState extends State<ProductPage> {
                                                   .validate()) {
                                                 var newItem = Product(
                                                     productId: 0,
-                                                    name: _name.text,
+                                                    name: name.text,
                                                     dateOfReceipt:
-                                                        _dateOfReceipt.text,
+                                                        dateOfReceipt.text,
                                                     expirationDate:
-                                                        _expirationDate.text,
+                                                        expirationDate.text,
                                                     amount:
-                                                        int.parse(_amount.text),
+                                                        int.parse(amount.text),
                                                     price: double.parse(
-                                                        _price.text),
+                                                        price.text),
                                                     madeOf: dropProducerIdAdd,
                                                     ownerId: widget
                                                         .currentuser.userId);
@@ -680,12 +653,9 @@ class _ProductPageState extends State<ProductPage> {
 
     setState(() {
       namesProducts = products;
-      // lengthList = products.length;
     });
-    // return Future<void>.delayed(const Duration(seconds: 2));
   }
 
-  //це у нас _initPhotos
   downloadList() {
     return Processing.getProducts(widget.currentuser.userId).then((value) {
       namesProducts = value;
@@ -702,19 +672,22 @@ class _ProductPageState extends State<ProductPage> {
     });
   }
 
-  Future<void> dialogBuilderEditProduct(BuildContext context, Product editProductItem) {
-    final _formKey = GlobalKey<FormState>();
+  Future<void> dialogBuilderEditProduct(
+      BuildContext context, Product editProductItem) {
+    // final formKey = GlobalKey<FormState>();
 
-    final TextEditingController _name = TextEditingController(text: editProductItem.name);
-    final TextEditingController _dateOfReceipt =
+    final TextEditingController name =
+        TextEditingController(text: editProductItem.name);
+    final TextEditingController dateOfReceipt =
         TextEditingController(text: editProductItem.dateOfReceipt);
-    final TextEditingController _expirationDate = TextEditingController(text: editProductItem.expirationDate);
-    final TextEditingController _amount = TextEditingController(text: editProductItem.amount.toString());
-    final TextEditingController _price = TextEditingController(text: editProductItem.price.toString());
-    final TextEditingController _made_of = TextEditingController(text: '');
-    final TextEditingController _ownerId = TextEditingController();
-    var dropProducerNames;
-    var dropProducerId;
+    final TextEditingController expirationDate =
+        TextEditingController(text: editProductItem.expirationDate);
+    final TextEditingController amount =
+        TextEditingController(text: editProductItem.amount.toString());
+    final TextEditingController price =
+        TextEditingController(text: editProductItem.price.toString());
+    Producer dropProducerNames;
+    late int dropProducerId;
 
     return showDialog<void>(
       context: context,
@@ -738,15 +711,16 @@ class _ProductPageState extends State<ProductPage> {
                           // const SizedBox(height: 10),
                           CustomFormField(
                             hintText: "Enter product name",
-                            controller: _name,
+                            controller: name,
                             validator: (val) {
-                              if (!nameRegExp.hasMatch(val!))
+                              if (!nameRegExp.hasMatch(val!)) {
                                 return 'Enter valid name';
+                              }
                               return null;
                             },
                           ),
                           TextField(
-                            controller: _dateOfReceipt,
+                            controller: dateOfReceipt,
                             //editing controller of this TextField
                             decoration: const InputDecoration(
                                 icon: Icon(Icons.calendar_today),
@@ -774,7 +748,7 @@ class _ProductPageState extends State<ProductPage> {
                                 //you can implement different kind of Date Format here according to your requirement
 
                                 setState(() {
-                                  _dateOfReceipt.text =
+                                  dateOfReceipt.text =
                                       formattedDate; //set output date to TextField value.
                                 });
                               } else {
@@ -783,7 +757,7 @@ class _ProductPageState extends State<ProductPage> {
                             },
                           ),
                           TextField(
-                            controller: _expirationDate,
+                            controller: expirationDate,
                             //editing controller of this TextField
                             decoration: const InputDecoration(
                                 icon: Icon(Icons.calendar_today),
@@ -811,7 +785,7 @@ class _ProductPageState extends State<ProductPage> {
                                 //you can implement different kind of Date Format here according to your requirement
 
                                 setState(() {
-                                  _expirationDate.text =
+                                  expirationDate.text =
                                       formattedDate; //set output date to TextField value.
                                 });
                               } else {
@@ -821,7 +795,7 @@ class _ProductPageState extends State<ProductPage> {
                           ),
                           CustomFormField(
                             hintText: 'Amount',
-                            controller: _amount,
+                            controller: amount,
                             validator: (val) {
                               final amountRegExp = RegExp(r'^[0-9]+$');
 
@@ -833,7 +807,7 @@ class _ProductPageState extends State<ProductPage> {
                           ),
                           CustomFormField(
                             hintText: 'Price',
-                            controller: _price,
+                            controller: price,
                             validator: (val) {
                               final phoneRegExp = RegExp(r'^[0-9]+$');
 
@@ -859,18 +833,12 @@ class _ProductPageState extends State<ProductPage> {
                                       }
 
                                       if (snapshot.hasData) {
-                                        print(
-                                            '${snapshot.connectionState} - snapshot.connectionState  ');
-                                        print(
-                                            '${namesProducers[0]} - namesProducers[0] ');
-                                        print(
-                                            '${namesProducers[0].name} - namesProducers[0].name  ');
-
                                         dropProducerNames = namesProducers[0];
+                                        print(
+                                            '${dropProducerNames.runtimeType} - type of dropProducerNames');
                                         dropProducerId =
                                             namesProducers[1].producerId;
-                                        print(
-                                            '${namesProducers} - namesProducers items ');
+
                                         return (!namesProducers[0].name.isEmpty)
                                             ? Expanded(child: StatefulBuilder(
                                                 builder: (context, setState) {
@@ -889,39 +857,15 @@ class _ProductPageState extends State<ProductPage> {
                                                           .deepPurpleAccent,
                                                     ),
                                                     onChanged: (value) {
-                                                      print(
-                                                          '${value} -value in onChange ');
-
-                                                      // This is called when the user selects an item.
-                                                      // dropProducerId = value!.producerId;
-                                                      print(
-                                                          '${dropProducerNames} - dropProducerNames before');
-                                                      print(
-                                                          '${dropProducerId} - dropProducerId before ');
-
                                                       dropProducerNames = value;
                                                       dropProducerId =
                                                           value!.producerId;
 
-                                                      print(
-                                                          '${dropProducerNames} - dropProducerNames after');
-                                                      print(
-                                                          '${dropProducerId} - dropProducerId after ');
-                                                      print('before setstate ');
-
-                                                      setState(() {
-                                                        print('setstate work');
-                                                      });
-                                                      print('after setstate ');
+                                                      setState(() {});
                                                     },
                                                     items: namesProducers
                                                         .map<DropdownMenuItem>(
                                                             (value) {
-                                                      print(
-                                                          '${value} -- just value');
-                                                      print(
-                                                          '${value.name} -- value name');
-
                                                       return DropdownMenuItem(
                                                         value: value,
                                                         child: Text(value.name),
@@ -930,7 +874,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   );
                                                 },
                                               ))
-                                            : Text('emp');
+                                            : const Text('emp');
                                       }
                                     }
                                     return const Text('Empty dropdown');
@@ -944,7 +888,6 @@ class _ProductPageState extends State<ProductPage> {
                             children: [
                               TextButton(
                                 style: TextButton.styleFrom(
-                                  // textStyle: Theme.of(context).textTheme.labelLarge,
                                   backgroundColor: Colors.green,
                                   padding:
                                       const EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -957,11 +900,11 @@ class _ProductPageState extends State<ProductPage> {
                                   if (_formKey.currentState!.validate()) {
                                     var updatedProduct = Product(
                                         productId: editProductItem.productId,
-                                        name: _name.text,
-                                        dateOfReceipt: _dateOfReceipt.text,
-                                        expirationDate: _expirationDate.text,
-                                        amount: int.parse(_amount.text),
-                                        price: double.parse(_price.text),
+                                        name: name.text,
+                                        dateOfReceipt: dateOfReceipt.text,
+                                        expirationDate: expirationDate.text,
+                                        amount: int.parse(amount.text),
+                                        price: double.parse(price.text),
                                         madeOf: dropProducerId,
                                         ownerId: widget.currentuser.userId);
 
@@ -989,11 +932,7 @@ class _ProductPageState extends State<ProductPage> {
                           ),
                         ],
                       ),
-                    )
-                    // actions: <Widget>[
-                    //
-                    // ],
-                    ),
+                    )),
               ),
             ),
           );

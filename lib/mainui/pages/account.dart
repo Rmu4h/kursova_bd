@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kursova_bd/logic/processing.dart';
-import 'package:kursova_bd/mainui/navigation.dart';
-import 'package:kursova_bd/mainui/pages/producers.dart';
-import 'package:kursova_bd/mainui/pages/products.dart';
-import 'package:kursova_bd/mainui/pages/report.dart';
 
 import '../../authentication/login-page.dart';
 import '../../logic/classes.dart';
@@ -16,16 +12,12 @@ class AccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<String> entries = [
       'Full Name: ${currentuser.name} ${currentuser.surname} ${currentuser.patronymic}',
-      // 'Surname: ${currentuser.surname}',
-      // 'Patronymic ${currentuser.patronymic}',
       'Document No.${currentuser.passportId}',
       'user Phone: ${currentuser.phone}',
       'user email ${currentuser.email}',
       'Password'
     ];
     final List<dynamic> icons = [
-      // Icons.account_circle,
-      // Icons.account_circle,
       Icons.account_circle,
       Icons.insert_drive_file_outlined,
       Icons.phone,
@@ -50,7 +42,6 @@ class AccountPage extends StatelessWidget {
                       color: Color(0xFFA2A6B1),
                     ),
                     onPressed: () {
-                      print('sent');
                       Navigator.popAndPushNamed(context, "/");
                     },
                   ),
@@ -90,9 +81,7 @@ class AccountPage extends StatelessWidget {
                     },
                     separatorBuilder: (BuildContext context, int index) =>
                         const Divider(
-                      // height: 1,
                       thickness: 1,
-                      // indent: 20,
                       endIndent: 0,
                       color: Colors.black,
                     ),
@@ -103,18 +92,18 @@ class AccountPage extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(40, 20, 40, 20),
                 ),
                 onPressed: () {
-                  final TextEditingController _name =
-                      TextEditingController(text: "${currentuser.name}");
-                  final TextEditingController _surname =
-                      TextEditingController(text: "${currentuser.surname}");
-                  final TextEditingController _patronymic =
-                      TextEditingController(text: "${currentuser.patronymic}");
-                  final TextEditingController _docNo =
-                      TextEditingController(text: "${currentuser.passportId}");
-                  final TextEditingController _email =
-                      TextEditingController(text: "${currentuser.email}");
-                  final TextEditingController _phone =
-                      TextEditingController(text: "${currentuser.phone}");
+                  final TextEditingController name =
+                      TextEditingController(text: currentuser.name);
+                  final TextEditingController surname =
+                      TextEditingController(text: currentuser.surname);
+                  final TextEditingController patronymic =
+                      TextEditingController(text: currentuser.patronymic);
+                  final TextEditingController docNo =
+                      TextEditingController(text: currentuser.passportId);
+                  final TextEditingController email =
+                      TextEditingController(text: currentuser.email);
+                  final TextEditingController phone =
+                      TextEditingController(text: currentuser.phone);
 
                   showModalBottomSheet<void>(
                     context: context,
@@ -158,7 +147,7 @@ class AccountPage extends StatelessWidget {
                                   const SizedBox(height: 20),
                                   CustomFormField(
                                     hintText: "Name",
-                                    controller: _name,
+                                    controller: name,
                                     validator: (val) {
                                       if (!nameRegExp.hasMatch(val!))
                                         return 'Enter valid name';
@@ -168,7 +157,7 @@ class AccountPage extends StatelessWidget {
                                   const SizedBox(height: 10),
                                   CustomFormField(
                                     hintText: 'Surname',
-                                    controller: _surname,
+                                    controller: surname,
                                     validator: (val) {
                                       if (!nameRegExp.hasMatch(val!)) {
                                         return 'Enter valid surname';
@@ -179,7 +168,7 @@ class AccountPage extends StatelessWidget {
                                   const SizedBox(height: 10),
                                   CustomFormField(
                                     hintText: 'Patronymic',
-                                    controller: _patronymic,
+                                    controller: patronymic,
                                     validator: (val) {
                                       if (!nameRegExp.hasMatch(val!)) {
                                         return 'Enter valid patronymic';
@@ -190,7 +179,7 @@ class AccountPage extends StatelessWidget {
                                   const SizedBox(height: 10),
                                   CustomFormField(
                                     hintText: 'Old Document No.',
-                                    controller: _docNo,
+                                    controller: docNo,
                                     validator: (val) {
                                       final idExp = RegExp(r"^[0-9]{9}$");
 
@@ -203,7 +192,7 @@ class AccountPage extends StatelessWidget {
                                   const SizedBox(height: 10),
                                   CustomFormField(
                                     hintText: 'Phone',
-                                    controller: _phone,
+                                    controller: phone,
                                     validator: (val) {
                                       final phoneRegExp =
                                           RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
@@ -217,7 +206,7 @@ class AccountPage extends StatelessWidget {
                                   const SizedBox(height: 10),
                                   CustomFormField(
                                     hintText: 'Email',
-                                    controller: _email,
+                                    controller: email,
                                     validator: (val) {
                                       final emailRegExp = RegExp(
                                           r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
@@ -240,17 +229,17 @@ class AccountPage extends StatelessWidget {
                                 ),
                                 child: const Text('SAVE CHANGES'),
                                 onPressed: () {
-                                  var temp_user = User(
+                                  var tempUser = User(
                                     userId: currentuser.userId,
-                                    name: _name.text,
-                                    surname: _surname.text,
-                                    patronymic: _patronymic.text,
-                                    phone: _phone.text,
-                                    passportId: _docNo.text,
-                                    email: _email.text,
+                                    name: name.text,
+                                    surname: surname.text,
+                                    patronymic: patronymic.text,
+                                    phone: phone.text,
+                                    passportId: docNo.text,
+                                    email: email.text,
                                     password: currentuser.password,
                                   );
-                                  Processing.updateUser(temp_user)
+                                  Processing.updateUser(tempUser)
                                       .then((value) {
                                     if (value == 'success') {
                                       showDialog(
@@ -274,7 +263,7 @@ class AccountPage extends StatelessWidget {
                                                               context,
                                                               '/main',
                                                               arguments:
-                                                                  temp_user,
+                                                                  tempUser,
                                                               ((route) => false));
                                                     },
                                                     backgroundColor:
@@ -325,7 +314,6 @@ class AccountPage extends StatelessWidget {
                                     }
                                   });
                                   Navigator.pop(context);
-                                  print('sent');
                                 },
                               ),
                             ],

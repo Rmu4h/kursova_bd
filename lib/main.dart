@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'authentication/login-page.dart';
 import 'authentication/registration-page.dart';
 import 'mainui/navigation.dart';
-import 'mainui/pages/account.dart';
 
 void main() {
   runApp(const StorageApplication());
