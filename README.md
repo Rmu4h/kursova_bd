@@ -1,4 +1,4 @@
-Adaptive mobile android and ios app
+Adaptive mobile app for android and ios 
 Technology stack:
 
 1. DART
