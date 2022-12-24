@@ -1,8 +1,8 @@
 Adaptive mobile android and ios app
 Technology stack:
 
-DART
-FLUTTER
-PHP
-MySQL
-phpMyAdmin
+1. DART
+2. FLUTTER
+3. PHP
+4. MySQL
+5. phpMyAdmin
